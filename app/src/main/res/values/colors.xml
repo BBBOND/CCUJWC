@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#23b5f4</color>
+
+    <color name="loadBackground">#c8161616</color>
+    <color name="dividerColor">#838383</color>
+    <color name="scoreTextColor">#9E9E9E</color>
+    <color name="listBackground">#FAFAFA</color>
+    <color name="tableTitleTextColor">#FAFAFA</color>
+</resources>

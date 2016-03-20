@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:title="首页" />
+        <item
+            android:id="@+id/nav_schoolCard"
+            android:title="学籍卡片" />
+        <item
+            android:id="@+id/nav_schedule"
+            android:title="个人课表" />
+        <item
+            android:id="@+id/nav_scoreQuery"
+            android:title="成绩查询" />
+    </group>
+    <item android:title="其他">
+        <menu>
+            <item
+                android:id="@+id/nav_reply"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Bug反馈" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="关于" />
+        </menu>
+    </item>
+</menu>
