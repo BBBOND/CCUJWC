@@ -1,13 +1,11 @@
 package com.kim.ccujwc.view;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +22,7 @@ import com.kim.ccujwc.view.utils.ModelChange;
 
 import org.apache.commons.httpclient.HttpClient;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ScheduleFragment extends BaseFragment {
