@@ -9,4 +9,6 @@ public class MyUrl {
     public static final String GRADE = "http://www.cdjwc.com/jiaowu/JWXS/cjcx/jwxs_cjcx_like.aspx?usermain=";
     public static final String COURSE = "http://www.cdjwc.com/jiaowu/JWXS/pkgl/xsxskb_xsy.aspx?";
     public static final String DEFAULT = "http://www.cdjwc.com/jiaowu/JWXS/Default.aspx";
+    public static final String SCHOOLCARD = "http://www.cdjwc.com/jiaowu/JWXS/xskp/jwxs_xskp_like.aspx?usermain=";
+    public static final String STUDENTIMAGE = "http://www.cdjwc.com/jiaowu/upload/XSXX/";
 }

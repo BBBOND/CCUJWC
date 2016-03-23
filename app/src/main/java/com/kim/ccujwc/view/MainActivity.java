@@ -5,7 +5,10 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -18,7 +21,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kim.ccujwc.R;
@@ -26,6 +31,9 @@ import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
 
 import org.apache.commons.httpclient.HttpClient;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,6 +80,39 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         initFragment();
+        new GetStudentImage().execute();
+
+    }
+
+    class GetStudentImage extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            File file = new File(getFilesDir().getPath() + "/" + App.Account + ".jpg");
+            if (file.exists()) {
+                return true;
+            } else {
+                try {
+                    HttpClient client = new HttpClient();
+                    return MyHttpUtil.getStudentImage(client, MainActivity.this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            ImageView iv = (ImageView) findViewById(R.id.imageView);
+            assert iv != null;
+            if (result) {
+                iv.setImageDrawable(Drawable.createFromPath(getFilesDir().getPath() + "/" + App.Account + ".jpg"));
+            } else {
+                iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_main));
+            }
+            super.onPostExecute(result);
+        }
     }
 
     private void getStudentIfno() {
@@ -166,7 +207,7 @@ public class MainActivity extends BaseActivity
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("反馈");
             builder.setMessage("有任何问题请反馈至jwy8645@163.com");
-            builder.setNegativeButton("赋值账号", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("复制账号", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {

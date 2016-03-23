@@ -97,7 +97,6 @@ public class LoginActivity extends BaseActivity {
         MySharedPreferences mspf = MySharedPreferences.getInstance(LoginActivity.this);
         Map<String, Object> user = mspf.readLoginInfo();
         boolean isSave = (boolean) user.get("isSave");
-        Log.d(TAG, "user: " + user.toString());
         if (isSave) {
             cbRemember.setClickable(true);
             edtAccount.getEditText().setText((CharSequence) user.get("account"));
