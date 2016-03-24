@@ -36,8 +36,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MainActivity"
+            android:label="首页"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.NewsActivity"
+            android:label="新闻"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

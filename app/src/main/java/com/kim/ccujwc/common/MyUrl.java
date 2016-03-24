@@ -11,4 +11,6 @@ public class MyUrl {
     public static final String DEFAULT = "http://www.cdjwc.com/jiaowu/JWXS/Default.aspx";
     public static final String SCHOOLCARD = "http://www.cdjwc.com/jiaowu/JWXS/xskp/jwxs_xskp_like.aspx?usermain=";
     public static final String STUDENTIMAGE = "http://www.cdjwc.com/jiaowu/upload/XSXX/";
+    public static final String NEWSLIST = "http://www.cdjwc.com/jiaowu/JWXS/OA_DESK.aspx";
+    public static final String NEWS = "http://www.cdjwc.com/jiaowu/JWXS/ShowGGTZ.aspx?GGTZID=";
 }

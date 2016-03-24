@@ -65,8 +65,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("");
-        toolbar.setTitle("首页");
+        setTitle("首页");
 
         getStudentIfno();
 
@@ -81,7 +80,6 @@ public class MainActivity extends BaseActivity
 
         initFragment();
         new GetStudentImage().execute();
-
     }
 
     class GetStudentImage extends AsyncTask<Void, Void, Boolean> {

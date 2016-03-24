@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.kim.ccujwc.model.Course;
 import com.kim.ccujwc.model.Grade;
+import com.kim.ccujwc.model.News;
 import com.kim.ccujwc.model.PersonGrade;
 import com.kim.ccujwc.model.SchoolCard;
 
@@ -265,7 +266,6 @@ public class MyHttpUtil {
                     continue;
                 Scanner scan = new Scanner(title);
                 course = new Course();
-                // TODO: 16-3-22 if 有错
                 while (scan.hasNext()) {
                     String temp = scan.nextLine();
                     String[] tag = temp.split("：");
@@ -520,7 +520,7 @@ public class MyHttpUtil {
     }
 
     public static boolean getStudentImage(HttpClient client, Context context) throws IOException {
-        GetMethod get = new GetMethod("http://www.cdjwc.com/jiaowu/upload/XSXX/" + App.Account + ".jpg");
+        GetMethod get = new GetMethod(MyUrl.STUDENTIMAGE + App.Account + ".jpg");
         client.getHostConfiguration().getParams().setDefaults(new DefaultHttpParams());
         int statusCode = client.executeMethod(get);
         if (statusCode == 200) {
@@ -541,6 +541,65 @@ public class MyHttpUtil {
             }
             fileOutputStream.close();
             return true;
+        } else {
+            throw new IOException("网络连接异常");
+        }
+    }
+
+    public static List<News> getNewsList(HttpClient client) throws IOException, ParserException {
+        List<News> newsList = null;
+        GetMethod get = new GetMethod(MyUrl.NEWSLIST);
+        List<Header> headers = new ArrayList<>();
+        headers.add(new Header("Cookie", App.cookie + App.cookie2));
+        client.getHostConfiguration().getParams().setParameter("http.default-headers", headers);
+        client.setConnectionTimeout(7 * 1000);
+
+        int statusCode = client.executeMethod(get);
+        if (statusCode == 200) {
+            newsList = new ArrayList<>();
+            String page = get.getResponseBodyAsString();
+            Parser parser = new Parser(page);
+            AndFilter filter = new AndFilter(new NodeClassFilter(TableTag.class), new HasAttributeFilter("id", "GridView1"));
+            NodeList nodeList = parser.extractAllNodesThatMatch(filter);
+            for (int i = 0; i < nodeList.size(); i++) {
+                TableTag table = (TableTag) nodeList.elementAt(i);
+                TableRow[] rows = table.getRows();
+                for (int j = 0; j < rows.length; j++) {
+                    TableRow row = rows[j];
+                    TableColumn[] columns = row.getColumns();
+                    News news = new News();
+                    if (columns.length > 1) {
+                        for (int k = 1; k < columns.length; k++) {
+                            TableColumn column = columns[k];
+                            NodeList childrens = column.getChildren();
+                            Node node = childrens.elementAt(1);
+                            if (childrens.size() == 5) {
+                                if (node instanceof LinkTag) {
+                                    LinkTag link = (LinkTag) node;
+                                    String str = link.getAttribute("onclick");
+                                    str = str.substring(46, str.length() - 3);
+                                    news.setNewsTitle(link.toPlainTextString());
+                                    news.setNewsTag(str);
+                                }
+                            } else {
+                                if (node instanceof Span) {
+                                    Span span = (Span) node;
+                                    String id = span.getAttribute("id");
+                                    String[] ids = {"GridView1__ctl" + (j + 2) + "_Label2", "GridView1__ctl" + (j + 2) + "_Label3"};
+                                    if (id.equals(ids[0])) {
+                                        news.setNewsType(span.toPlainTextString());
+                                    }
+                                    if (id.equals(ids[1]))
+                                        news.setSendTime(span.toPlainTextString());
+                                }
+                            }
+                        }
+                    }
+                    newsList.add(news);
+                }
+            }
+            newsList.remove(newsList.size() - 1);
+            return newsList;
         } else {
             throw new IOException("网络连接异常");
         }
