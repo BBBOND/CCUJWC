@@ -23,4 +23,16 @@ public class App extends Application {
 
     public static PersonGrade personGrade = null;
     public static List<Course> courses = null;
+
+    public static void clearAll() {
+        __EVENTVALIDATION = "";
+        __VIEWSTATE = "";
+        Name = "";
+        Account = "";
+        PWD = "";
+        cookie = "";
+        cookie2 = "";
+        personGrade = null;
+        courses = null;
+    }
 }

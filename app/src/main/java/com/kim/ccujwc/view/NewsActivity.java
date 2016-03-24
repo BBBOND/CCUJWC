@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -33,21 +31,10 @@ public class NewsActivity extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.wv_news);
         webView.getSettings().setJavaScriptEnabled(true);
-        //设置支持js
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message,
-                                     JsResult result) {
-                // TODO Auto-generated method stub
-                return super.onJsAlert(view, url, message, result);
-            }
-
-        });
         //设置不掉用外部浏览器
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
                 view.loadUrl(url);
                 return true;
             }

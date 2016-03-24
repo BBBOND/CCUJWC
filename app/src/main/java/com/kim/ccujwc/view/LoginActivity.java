@@ -41,6 +41,36 @@ public class LoginActivity extends BaseActivity {
     private AppCompatCheckBox cbRemember;
 
     private int connCount = 0;
+    private int initParamsCount = 0;
+
+    Handler connectFailedHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == 1) {
+                new InitParams().execute();
+                return true;
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("警告");
+                builder.setMessage("无法连接教务处主页,请检查网络后重试！");
+                builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                builder.setPositiveButton("重试", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        initParamsCount = 0;
+                        new InitParams().execute();
+                    }
+                });
+                builder.create().show();
+                return false;
+            }
+        }
+    });
 
     Handler loginErrorHandler = new Handler(new Handler.Callback() {
         @Override
@@ -86,6 +116,7 @@ public class LoginActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         initView();
         initEvent();
+        new InitParams().execute();
     }
 
     private void initView() {
@@ -93,6 +124,10 @@ public class LoginActivity extends BaseActivity {
         edtPassword = (TextInputLayout) findViewById(R.id.edtPassword);
         btnLogin = (ActionProcessButton) findViewById(R.id.btnLogin);
         cbRemember = (AppCompatCheckBox) findViewById(R.id.cb_remember);
+
+        btnLogin.setEnabled(false);
+        btnLogin.setText("准备中...");
+        btnLogin.setBackgroundColor(getResources().getColor(R.color.blue_pressed));
 
         MySharedPreferences mspf = MySharedPreferences.getInstance(LoginActivity.this);
         Map<String, Object> user = mspf.readLoginInfo();
@@ -186,6 +221,36 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    class InitParams extends AsyncTask<String, Void, Map<String, String>> {
+
+        @Override
+        protected Map<String, String> doInBackground(String... params) {
+            try {
+                HttpClient client = new HttpClient();
+                return MyHttpUtil.getParams(client);
+            } catch (Exception e) {
+                if (initParamsCount <= 3) {
+                    initParamsCount++;
+                    Message message = connectFailedHandler.obtainMessage();
+                    message.what = 1;
+                    message.sendToTarget();
+                }
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Map<String, String> result) {
+            App.cookie = result.get("Cookie");
+            App.__EVENTVALIDATION = result.get("__EVENTVALIDATION");
+            App.__VIEWSTATE = result.get("__VIEWSTATE");
+            btnLogin.setEnabled(true);
+            btnLogin.setText("登录");
+            btnLogin.setBackgroundColor(getResources().getColor(R.color.blue_normal));
+            super.onPostExecute(result);
+        }
+    }
+
     class Login extends AsyncTask<Void, Void, Boolean> {
 
         @Override
@@ -240,4 +305,5 @@ public class LoginActivity extends BaseActivity {
             super.onPostExecute(result);
         }
     }
+
 }

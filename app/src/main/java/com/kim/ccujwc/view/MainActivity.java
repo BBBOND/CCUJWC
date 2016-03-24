@@ -5,6 +5,7 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -219,9 +220,9 @@ public class MainActivity extends BaseActivity
             });
             builder.setPositiveButton("好的", null);
             builder.create().show();
-        } else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_donate) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("关于");
+            builder.setTitle("捐赠");
             builder.setMessage("感谢您使用本软件，你们的支持是我最大的动力，如果你有余力也可以请我吃个盒饭。\n支付宝账号:609076290@qq.com");
             builder.setNegativeButton("复制账号", new DialogInterface.OnClickListener() {
                 @Override
@@ -236,6 +237,30 @@ public class MainActivity extends BaseActivity
                 }
             });
             builder.setPositiveButton("知道了", null);
+            builder.create().show();
+        } else if (id == R.id.nav_about) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("关于");
+            try {
+                builder.setMessage("软件版本:" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                builder.setMessage("软件版本:获取失败");
+            }
+            builder.setPositiveButton("知道了", null);
+            builder.create().show();
+        } else if (id == R.id.nav_logout) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("提示");
+            builder.setMessage("你即将注销帐号，是否继续？");
+            builder.setNegativeButton("点错了", null);
+            builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    App.clearAll();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                }
+            });
             builder.create().show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

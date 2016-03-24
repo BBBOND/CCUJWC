@@ -25,42 +25,17 @@ import java.util.Map;
  */
 public class WelcomeActivity extends BaseActivity {
 
-    private int connectCount = 0;
-
-    Handler connectFailedHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if (msg.what == 1) {
-                new initParams().execute();
-                return true;
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(WelcomeActivity.this);
-                builder.setTitle("警告");
-                builder.setMessage("无法连接教务处主页,请检查网络后重试！");
-                builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-                builder.setPositiveButton("重试", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        connectCount = 0;
-                        new initParams().execute();
-                    }
-                });
-                builder.create().show();
-                return false;
-            }
-        }
-    });
-
     Handler checkConnHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             if ((boolean) msg.obj) {
-                new initParams().execute();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                }, 2000);
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(WelcomeActivity.this);
                 builder.setTitle("警告");
@@ -107,34 +82,5 @@ public class WelcomeActivity extends BaseActivity {
                 message.sendToTarget();
             }
         }).start();
-    }
-
-    class initParams extends AsyncTask<String, Void, Map<String, String>> {
-
-        @Override
-        protected Map<String, String> doInBackground(String... params) {
-            try {
-                HttpClient client = new HttpClient();
-                return MyHttpUtil.getParams(client);
-            } catch (Exception e) {
-                if (connectCount <= 3) {
-                    connectCount++;
-                    Message message = connectFailedHandler.obtainMessage();
-                    message.what = 1;
-                    message.sendToTarget();
-                }
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Map<String, String> result) {
-            App.cookie = result.get("Cookie");
-            App.__EVENTVALIDATION = result.get("__EVENTVALIDATION");
-            App.__VIEWSTATE = result.get("__VIEWSTATE");
-            startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
-            finish();
-            super.onPostExecute(result);
-        }
     }
 }
