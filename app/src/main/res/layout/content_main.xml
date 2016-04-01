@@ -10,4 +10,11 @@
         android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="1dp" />
+
+    <com.kim.ccujwc.view.utils.LoadingView
+        android:id="@+id/loadView"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/loadBackground" />
 </RelativeLayout>

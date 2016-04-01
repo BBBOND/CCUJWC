@@ -19,6 +19,8 @@ import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.model.SchoolCard;
+import com.kim.ccujwc.view.utils.LoadingView;
+import com.kim.ccujwc.view.utils.ShapeLoadingView;
 
 import org.apache.commons.httpclient.HttpClient;
 
@@ -101,8 +103,8 @@ public class SchoolCardFragment extends BaseFragment {
     AppCompatTextView tvGraduationCertificateNum;
     @Bind(R.id.tv_graduationCardNum)
     AppCompatTextView tvGraduationCardNum;
-    @Bind(R.id.frame_load)
-    FrameLayout frameLoad;
+    @Bind(R.id.loadView)
+    LoadingView loadView;
 
     private int requestCount = 0;
 
@@ -160,7 +162,7 @@ public class SchoolCardFragment extends BaseFragment {
 
         @Override
         protected void onPreExecute() {
-            frameLoad.setVisibility(View.VISIBLE);
+            loadView.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -207,7 +209,7 @@ public class SchoolCardFragment extends BaseFragment {
                 builder.setPositiveButton("知道了", null);
                 builder.create().show();
             }
-            frameLoad.setVisibility(View.GONE);
+            loadView.setVisibility(View.GONE);
             super.onPostExecute(schoolCard);
         }
     }

@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.kim.ccujwc.R;
@@ -38,7 +39,7 @@ public class LoginActivity extends BaseActivity {
     private TextInputLayout edtAccount;
     private TextInputLayout edtPassword;
     private ActionProcessButton btnLogin;
-    private AppCompatCheckBox cbRemember;
+    private CheckBox cbRemember;
 
     private int connCount = 0;
     private int initParamsCount = 0;
@@ -123,7 +124,7 @@ public class LoginActivity extends BaseActivity {
         edtAccount = (TextInputLayout) findViewById(R.id.edtAccount);
         edtPassword = (TextInputLayout) findViewById(R.id.edtPassword);
         btnLogin = (ActionProcessButton) findViewById(R.id.btnLogin);
-        cbRemember = (AppCompatCheckBox) findViewById(R.id.cb_remember);
+        cbRemember = (CheckBox) findViewById(R.id.cb_remember);
 
         btnLogin.setEnabled(false);
         btnLogin.setText("准备中...");

@@ -18,7 +18,9 @@ import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.model.Course;
 import com.kim.ccujwc.model.UICourse;
+import com.kim.ccujwc.view.utils.LoadingView;
 import com.kim.ccujwc.view.utils.ModelChange;
+import com.kim.ccujwc.view.utils.ShapeLoadingView;
 
 import org.apache.commons.httpclient.HttpClient;
 
@@ -29,7 +31,7 @@ public class ScheduleFragment extends BaseFragment {
 
     private static final String TAG = "ScheduleFragment";
 
-    private FrameLayout frameLoad;
+    private LoadingView loadView;
     private GridLayout glCourse;
     private TextView tvRow;
     private TextView tvCol;
@@ -75,7 +77,7 @@ public class ScheduleFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-        frameLoad = (FrameLayout) view.findViewById(R.id.frame_load);
+        loadView = (LoadingView) view.findViewById(R.id.loadView);
         glCourse = (GridLayout) view.findViewById(R.id.gl_course);
         tvCol = (TextView) view.findViewById(R.id.tv_col);
         tvRow = (TextView) view.findViewById(R.id.tv_row);
@@ -112,7 +114,7 @@ public class ScheduleFragment extends BaseFragment {
 
         @Override
         protected void onPreExecute() {
-            frameLoad.setVisibility(View.VISIBLE);
+            loadView.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -157,7 +159,7 @@ public class ScheduleFragment extends BaseFragment {
                     });
                     glCourse.addView(tv);
                 }
-                frameLoad.setVisibility(View.GONE);
+                loadView.setVisibility(View.GONE);
             }
             super.onPostExecute(result);
         }

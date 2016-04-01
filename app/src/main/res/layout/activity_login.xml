@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:gravity="end">
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/cb_remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -302,10 +302,10 @@ public class MyHttpUtil {
                                 course.setCourseEndWeek(t[t.length - 1]);
                                 course.setIsSingleWeek(0);
                             }
+                        } else {
+                            course.setCourseStartWeek("");
+                            course.setCourseEndWeek("");
                         }
-                    } else {
-                        course.setCourseStartWeek("");
-                        course.setCourseEndWeek("");
                     }
                     if (tag[0] != null && tag[0].equals("开课地点"))
                         course.setCoursePlace(tag.length > 1 ? tag[1] : "");

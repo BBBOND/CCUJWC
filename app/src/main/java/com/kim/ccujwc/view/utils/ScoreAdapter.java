@@ -57,7 +57,7 @@ public class ScoreAdapter extends BaseAdapter {
             holder.tvSemester = (TextView) view.findViewById(R.id.tv_semester);
             holder.tvCourseNumber = (TextView) view.findViewById(R.id.tv_courseNumber);
             holder.tvCourseName = (TextView) view.findViewById(R.id.tv_courseName);
-            holder.tvSocre = (TextView) view.findViewById(R.id.tv_socre);
+            holder.tvScore = (TextView) view.findViewById(R.id.tv_score);
             holder.tvCredit = (TextView) view.findViewById(R.id.tv_credit);
             holder.tvPeriod = (TextView) view.findViewById(R.id.tv_period);
             holder.tvCourseNature = (TextView) view.findViewById(R.id.tv_courseNature);
@@ -72,7 +72,7 @@ public class ScoreAdapter extends BaseAdapter {
         holder.tvSemester.setText(grade.getSemester());
         holder.tvCourseNumber.setText(grade.getCourseNumber());
         holder.tvCourseName.setText(grade.getCourseName());
-        holder.tvSocre.setText(grade.getSocre());
+        holder.tvScore.setText(grade.getSocre());
         holder.tvCredit.setText(grade.getCredit());
         holder.tvPeriod.setText(grade.getPeriod());
         holder.tvCourseNature.setText(grade.getCourseNature());
@@ -89,7 +89,7 @@ public class ScoreAdapter extends BaseAdapter {
         TextView tvSemester;
         TextView tvCourseNumber;
         TextView tvCourseName;
-        TextView tvSocre;
+        TextView tvScore;
         TextView tvCredit;
         TextView tvPeriod;
         TextView tvCourseNature;

@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.model.News;
+import com.kim.ccujwc.view.utils.LoadingView;
 import com.kim.ccujwc.view.utils.NewsAdapter;
+import com.kim.ccujwc.view.utils.ShapeLoadingView;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.htmlparser.util.ParserException;
@@ -30,6 +32,7 @@ import java.util.List;
 public class MainFragment extends BaseFragment {
 
     private ListView lvNews;
+    private LoadingView loadView;
 
     private int requestCount = 0;
 
@@ -64,6 +67,8 @@ public class MainFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_main, null);
         lvNews = (ListView) view.findViewById(R.id.lv_news);
+        loadView = (LoadingView) view.findViewById(R.id.loadView);
+
         new GetNews().execute();
         return view;
     }
@@ -85,6 +90,12 @@ public class MainFragment extends BaseFragment {
         }
 
         @Override
+        protected void onPreExecute() {
+            loadView.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
         protected void onPostExecute(final List<News> result) {
             if (result != null) {
                 NewsAdapter adapter = new NewsAdapter(getContext(), R.layout.news_list_item, result);
@@ -98,6 +109,7 @@ public class MainFragment extends BaseFragment {
                     }
                 });
             }
+            loadView.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
     }

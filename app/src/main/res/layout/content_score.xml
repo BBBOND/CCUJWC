@@ -31,10 +31,10 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="通过否"
+                        android:text="通过"
                         android:textColor="@color/tableTitleTextColor"
                         android:textSize="18sp" />
 
@@ -44,7 +44,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="开课学期"
@@ -57,7 +57,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="85dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="课程编号"
@@ -70,7 +70,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="课程名称"
@@ -83,10 +83,10 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="总成绩"
+                        android:text="成绩"
                         android:textColor="@color/tableTitleTextColor"
                         android:textSize="18sp" />
 
@@ -96,7 +96,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="学分"
@@ -109,7 +109,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="学时"
@@ -135,7 +135,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="课程类别"
@@ -174,7 +174,7 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="标志"
@@ -187,17 +187,12 @@
                         android:background="@color/dividerColor" />
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="补重学期"
                         android:textColor="@color/tableTitleTextColor"
                         android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/dividerColor" />
                 </LinearLayout>
 
                 <View
@@ -394,17 +389,10 @@
         </GridLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frame_load"
+    <com.kim.ccujwc.view.utils.LoadingView
+        android:id="@+id/loadView"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/loadBackground"
-        android:visibility="invisible">
-
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
+        android:background="@color/loadBackground" />
 </RelativeLayout>

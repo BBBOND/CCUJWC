@@ -17,13 +17,15 @@ import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.model.PersonGrade;
+import com.kim.ccujwc.view.utils.LoadingView;
 import com.kim.ccujwc.view.utils.ScoreAdapter;
+import com.kim.ccujwc.view.utils.ShapeLoadingView;
 
 import org.apache.commons.httpclient.HttpClient;
 
 public class ScoreFragment extends BaseFragment {
 
-    private FrameLayout frameLoad;
+    private LoadingView loadView;
     private ListView lvScore;
     private TextView tvTotalCredits;
     private TextView tvCompulsoryCredits;
@@ -76,7 +78,7 @@ public class ScoreFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-        frameLoad = (FrameLayout) view.findViewById(R.id.frame_load);
+        loadView = (LoadingView) view.findViewById(R.id.loadView);
         lvScore = (ListView) view.findViewById(R.id.lv_score);
 
         tvTotalCredits = (TextView) view.findViewById(R.id.tv_totalCredits);
@@ -111,7 +113,7 @@ public class ScoreFragment extends BaseFragment {
 
         @Override
         protected void onPreExecute() {
-            frameLoad.setVisibility(View.VISIBLE);
+            loadView.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -131,7 +133,7 @@ public class ScoreFragment extends BaseFragment {
 
                 ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, result.getGradeList());
                 lvScore.setAdapter(adapter);
-                frameLoad.setVisibility(View.GONE);
+                loadView.setVisibility(View.GONE);
             }
             super.onPostExecute(result);
         }
