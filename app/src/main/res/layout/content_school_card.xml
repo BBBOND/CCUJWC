@@ -19,14 +19,20 @@
             android:translationZ="2dp"
             tools:targetApi="lollipop">
 
-            <ImageView
-                android:id="@+id/iv_head"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:padding="5dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_main" />
+                android:layout_weight="2">
+
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_main" />
+            </LinearLayout>
 
             <ScrollView
                 android:layout_width="0dp"
@@ -762,9 +768,9 @@
 
     <com.kim.ccujwc.view.utils.LoadingView
         android:id="@+id/loadView"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/loadBackground" />
+        android:background="@color/loadBackground"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.kim.ccujwc.view;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -168,48 +169,52 @@ public class SchoolCardFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(SchoolCard schoolCard) {
-            if (schoolCard != null) {
-                tvFullName.setText(schoolCard.getFullName());
-                tvSex.setText(schoolCard.getSex());
-                tvNation.setText(schoolCard.getNation());
-                tvDateOfBirth.setText(schoolCard.getDateOfBirth());
-                tvHometown.setText(schoolCard.getHometown());
-                tvFamily.setText(schoolCard.getFamily());
-                tvPoliticalLandscape.setText(schoolCard.getPoliticalLandscape());
-                tvPhone.setText(schoolCard.getPhone());
-                tvDepartment.setText(schoolCard.getDepartment());
-                tvMajor.setText(schoolCard.getMajor());
-                tvClass.setText(schoolCard.getClas());
-                tvLengthOfSchooling.setText(schoolCard.getLengthOfSchooling());
-                tvAdmissionDate.setText(schoolCard.getAdmissionDate());
-                tvGraduationDate.setText(schoolCard.getGraduationDate());
-                tvProfessionalDirection.setText(schoolCard.getProfessionalDirection());
-                tvStudentID.setText(schoolCard.getStudentID());
-                tvLearningForm.setText(schoolCard.getLearningForm());
-                tvLearningLevel.setText(schoolCard.getLearningLevel());
-                tvJoinLeagueTimeAndPlace.setText(schoolCard.getJoinLeagueTimeAndPlace());
-                tvPreSchoolEducation.setText(schoolCard.getPreSchoolEducation());
-                tvForeignLanguageTypes.setText(schoolCard.getForeignLanguageTypes());
-                tvPreWorkUnit.setText(schoolCard.getPreWorkUnit());
-                tvPosition.setText(schoolCard.getPosition());
-                tvAddress.setText(schoolCard.getAddress());
-                tvStationGetOff.setText(schoolCard.getStationGetOff());
-                tvPostcode.setText(schoolCard.getPostcode());
-                tvHomePhone.setText(schoolCard.getHomePhone());
-                tvContacts.setText(schoolCard.getContacts());
-                tvEntranceExam.setText(schoolCard.getEntranceExam());
-                tvIdCardNum.setText(schoolCard.getIdCardNum());
-                tvStudentIDCardNum.setText(schoolCard.getStudentIDCardNum());
-                tvGraduationCertificateNum.setText(schoolCard.getGraduationCertificateNum());
-                tvGraduationCardNum.setText(schoolCard.getGraduationCardNum());
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("提示");
-                builder.setMessage("没有获取到数据！");
-                builder.setPositiveButton("知道了", null);
-                builder.create().show();
+            try {
+                if (schoolCard != null) {
+                    tvFullName.setText(schoolCard.getFullName());
+                    tvSex.setText(schoolCard.getSex());
+                    tvNation.setText(schoolCard.getNation());
+                    tvDateOfBirth.setText(schoolCard.getDateOfBirth());
+                    tvHometown.setText(schoolCard.getHometown());
+                    tvFamily.setText(schoolCard.getFamily());
+                    tvPoliticalLandscape.setText(schoolCard.getPoliticalLandscape());
+                    tvPhone.setText(schoolCard.getPhone());
+                    tvDepartment.setText(schoolCard.getDepartment());
+                    tvMajor.setText(schoolCard.getMajor());
+                    tvClass.setText(schoolCard.getClas());
+                    tvLengthOfSchooling.setText(schoolCard.getLengthOfSchooling());
+                    tvAdmissionDate.setText(schoolCard.getAdmissionDate());
+                    tvGraduationDate.setText(schoolCard.getGraduationDate());
+                    tvProfessionalDirection.setText(schoolCard.getProfessionalDirection());
+                    tvStudentID.setText(schoolCard.getStudentID());
+                    tvLearningForm.setText(schoolCard.getLearningForm());
+                    tvLearningLevel.setText(schoolCard.getLearningLevel());
+                    tvJoinLeagueTimeAndPlace.setText(schoolCard.getJoinLeagueTimeAndPlace());
+                    tvPreSchoolEducation.setText(schoolCard.getPreSchoolEducation());
+                    tvForeignLanguageTypes.setText(schoolCard.getForeignLanguageTypes());
+                    tvPreWorkUnit.setText(schoolCard.getPreWorkUnit());
+                    tvPosition.setText(schoolCard.getPosition());
+                    tvAddress.setText(schoolCard.getAddress());
+                    tvStationGetOff.setText(schoolCard.getStationGetOff());
+                    tvPostcode.setText(schoolCard.getPostcode());
+                    tvHomePhone.setText(schoolCard.getHomePhone());
+                    tvContacts.setText(schoolCard.getContacts());
+                    tvEntranceExam.setText(schoolCard.getEntranceExam());
+                    tvIdCardNum.setText(schoolCard.getIdCardNum());
+                    tvStudentIDCardNum.setText(schoolCard.getStudentIDCardNum());
+                    tvGraduationCertificateNum.setText(schoolCard.getGraduationCertificateNum());
+                    tvGraduationCardNum.setText(schoolCard.getGraduationCardNum());
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("提示");
+                    builder.setMessage("没有获取到数据！");
+                    builder.setPositiveButton("知道了", null);
+                    builder.create().show();
+                }
+                loadView.setVisibility(View.GONE);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            loadView.setVisibility(View.GONE);
             super.onPostExecute(schoolCard);
         }
     }
@@ -217,14 +222,20 @@ public class SchoolCardFragment extends BaseFragment {
     class GetStudentImage extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            File file = new File(getContext().getFilesDir().getPath() + "/" + App.Account + ".jpg");
+            File file = null;
+            try {
+                file = new File(getContext().getFilesDir().getPath() + "/" + App.Account + ".jpg");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
             if (file.exists()) {
                 return true;
             } else {
                 try {
                     HttpClient client = new HttpClient();
                     return MyHttpUtil.getStudentImage(client, getContext());
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     return false;
                 }
@@ -233,10 +244,14 @@ public class SchoolCardFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if (result) {
-                ivHead.setImageDrawable(Drawable.createFromPath(getContext().getFilesDir().getPath() + "/" + App.Account + ".jpg"));
-            } else {
-                ivHead.setImageDrawable(getResources().getDrawable(R.drawable.ic_main));
+            try {
+                if (result) {
+                    ivHead.setImageDrawable(Drawable.createFromPath(getContext().getFilesDir().getPath() + "/" + App.Account + ".jpg"));
+                } else {
+                    ivHead.setImageDrawable(getResources().getDrawable(R.drawable.ic_main));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             super.onPostExecute(result);
         }

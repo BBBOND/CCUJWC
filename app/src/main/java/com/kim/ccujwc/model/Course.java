@@ -113,4 +113,47 @@ public class Course {
         text += "上课地点：" + coursePlace + '\n';
         return text;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        if (isSingleWeek != course.isSingleWeek) return false;
+        if (courseNum != null ? !courseNum.equals(course.courseNum) : course.courseNum != null)
+            return false;
+        if (courseCode != null ? !courseCode.equals(course.courseCode) : course.courseCode != null)
+            return false;
+        if (courseName != null ? !courseName.equals(course.courseName) : course.courseName != null)
+            return false;
+        if (courseTeacher != null ? !courseTeacher.equals(course.courseTeacher) : course.courseTeacher != null)
+            return false;
+        if (courseStartTime != null ? !courseStartTime.equals(course.courseStartTime) : course.courseStartTime != null)
+            return false;
+        if (courseStartWeek != null ? !courseStartWeek.equals(course.courseStartWeek) : course.courseStartWeek != null)
+            return false;
+        if (courseEndWeek != null ? !courseEndWeek.equals(course.courseEndWeek) : course.courseEndWeek != null)
+            return false;
+        if (coursePlace != null ? !coursePlace.equals(course.coursePlace) : course.coursePlace != null)
+            return false;
+        return courseClass != null ? courseClass.equals(course.courseClass) : course.courseClass == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = courseNum != null ? courseNum.hashCode() : 0;
+        result = 31 * result + (courseCode != null ? courseCode.hashCode() : 0);
+        result = 31 * result + (courseName != null ? courseName.hashCode() : 0);
+        result = 31 * result + (courseTeacher != null ? courseTeacher.hashCode() : 0);
+        result = 31 * result + (courseStartTime != null ? courseStartTime.hashCode() : 0);
+        result = 31 * result + (courseStartWeek != null ? courseStartWeek.hashCode() : 0);
+        result = 31 * result + (courseEndWeek != null ? courseEndWeek.hashCode() : 0);
+        result = 31 * result + isSingleWeek;
+        result = 31 * result + (coursePlace != null ? coursePlace.hashCode() : 0);
+        result = 31 * result + (courseClass != null ? courseClass.hashCode() : 0);
+        return result;
+    }
 }

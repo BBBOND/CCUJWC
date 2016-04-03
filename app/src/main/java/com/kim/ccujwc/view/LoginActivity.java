@@ -29,7 +29,7 @@ import org.apache.commons.httpclient.HttpClient;
 import java.util.Map;
 
 /**
- * 登陆界面
+ * 登录界面
  * Created by 伟阳 on 2016/3/12.
  */
 public class LoginActivity extends BaseActivity {
@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity {
                             edtPassword.getEditText().setEnabled(true);
                             btnLogin.setProgress(0);
                             btnLogin.setBackgroundColor(getResources().getColor(R.color.blue_normal));
-                            btnLogin.setText("登陆");
+                            btnLogin.setText("登录");
                             btnLogin.setEnabled(true);
                         }
                     });
@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.blue_normal));
-                    btnLogin.setText("登陆");
+                    btnLogin.setText("登录");
                 }
 
                 @Override
@@ -205,7 +205,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.blue_normal));
-                    btnLogin.setText("登陆");
+                    btnLogin.setText("登录");
                 }
 
                 @Override
@@ -272,7 +272,7 @@ public class LoginActivity extends BaseActivity {
         protected void onPreExecute() {
             btnLogin.setEnabled(false);
             btnLogin.setMode(ActionProcessButton.Mode.ENDLESS);
-            btnLogin.setText("登陆中...");
+            btnLogin.setText("登录中...");
             btnLogin.setBackgroundColor(getResources().getColor(R.color.blue_pressed));
             btnLogin.setProgress(50);
             btnLogin.drawProgress(new Canvas());
@@ -289,7 +289,7 @@ public class LoginActivity extends BaseActivity {
                     mspf.saveLoginInfo(App.Account, App.PWD, cbRemember.isChecked());
                     btnLogin.setProgress(0);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.green_complete));
-                    btnLogin.setText("登陆成功");
+                    btnLogin.setText("登录成功");
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 } else {
@@ -300,7 +300,7 @@ public class LoginActivity extends BaseActivity {
                     edtPassword.getEditText().setEnabled(true);
                     edtPassword.setError("学号或密码错误");
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.red_error));
-                    btnLogin.setText("登陆失败");
+                    btnLogin.setText("登录失败");
                 }
             }
             super.onPostExecute(result);

@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,10 @@ import com.kim.ccujwc.view.utils.ShapeLoadingView;
 
 import org.apache.commons.httpclient.HttpClient;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class ScheduleFragment extends BaseFragment {
@@ -121,48 +126,84 @@ public class ScheduleFragment extends BaseFragment {
         @Override
         protected void onPostExecute(List<Course> result) {
             if (result != null) {
+                HashSet<Course> courses = new HashSet<>();
+                courses.addAll(result);
+                result.clear();
+                result.addAll(courses);
+                courses.clear();
                 App.courses = result;
                 List<UICourse> uiCourses = ModelChange.course2UICourse(result);
-                for (int j = 0; j < uiCourses.size(); j++) {
-                    final UICourse course = uiCourses.get(j);
-                    int courseTime = Integer.parseInt(course.getCourseStartTime());
-                    int x = (courseTime / 10000) - 1;
-                    int y = ((courseTime - 10000 * (x + 1)) / 100) / 2;
+                try {
+                    for (int j = 0; j < uiCourses.size(); j++) {
+                        final UICourse course = uiCourses.get(j);
+                        int courseTime = 0;
+                        if (!course.getCourseStartTime().equals("")) {
+                            courseTime = Integer.parseInt(course.getCourseStartTime());
+                            String timeStr = Integer.toString(courseTime);
 
-                    GridLayout.Spec row = GridLayout.spec(y);
-                    GridLayout.Spec col = GridLayout.spec(x);
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(row, col);
-                    params.width = tvCol.getWidth();
-                    params.height = tvRow.getHeight();
-                    TextView tv = new TextView(getContext());
-                    tv.setLayoutParams(params);
-                    tv.setBackgroundResource(R.drawable.course_card_background);
-                    tv.setText(course.getShowText());
-                    tv.setPadding(5, 5, 2, 2);
-                    tv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            List<Course> courses = course.getCourses();
-                            String message = "";
-                            for (int i = 0; i < courses.size(); i++) {
-                                if (i > 0) {
-                                    message += "\n--------\n";
-                                }
-                                message += courses.get(i).toString();
+                            int x = Integer.parseInt(timeStr.charAt(0) + "") - 1;
+                            int y = Integer.parseInt(timeStr.charAt(2) + "") / 2;
+
+                            TextView tv = getView(course, x, y);
+                            glCourse.addView(tv);
+                            if (timeStr.length() > 5 && timeStr.length() <= 9) {
+                                y = Integer.parseInt(timeStr.charAt(6) + "") / 2;
+                                tv = getView(course, x, y);
+                                glCourse.addView(tv);
+                            } else if (timeStr.length() > 9 && timeStr.length() <= 13) {
+                                y = Integer.parseInt(timeStr.charAt(10) + "") / 2;
+                                tv = getView(course, x, y);
+                                glCourse.addView(tv);
+                            } else if (timeStr.length() > 13 && timeStr.length() <= 17) {
+                                y = Integer.parseInt(timeStr.charAt(14) + "") / 2;
+                                tv = getView(course, x, y);
+                                glCourse.addView(tv);
+                            } else if (timeStr.length() > 17 && timeStr.length() <= 21) {
+                                y = Integer.parseInt(timeStr.charAt(18) + "") / 2;
+                                tv = getView(course, x, y);
+                                glCourse.addView(tv);
                             }
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setTitle("详细信息");
-                            builder.setMessage(message);
-                            builder.setPositiveButton("确定", null);
-                            builder.create().show();
                         }
-                    });
-                    glCourse.addView(tv);
+                    }
+                    loadView.setVisibility(View.GONE);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                loadView.setVisibility(View.GONE);
             }
             super.onPostExecute(result);
         }
     }
 
+    @NonNull
+    private TextView getView(final UICourse course, int x, int y) throws Exception {
+        GridLayout.Spec row = GridLayout.spec(y);
+        GridLayout.Spec col = GridLayout.spec(x);
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams(row, col);
+        params.width = tvCol.getWidth();
+        params.height = tvRow.getHeight();
+        TextView tv = new TextView(getContext());
+        tv.setLayoutParams(params);
+        tv.setBackgroundResource(R.drawable.course_card_background);
+        tv.setText(course.getShowText());
+        tv.setPadding(5, 5, 2, 2);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Course> courses = course.getCourses();
+                String message = "";
+                for (int i = 0; i < courses.size(); i++) {
+                    if (i > 0) {
+                        message += "\n--------\n";
+                    }
+                    message += courses.get(i).toString();
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("详细信息");
+                builder.setMessage(message);
+                builder.setPositiveButton("确定", null);
+                builder.create().show();
+            }
+        });
+        return tv;
+    }
 }

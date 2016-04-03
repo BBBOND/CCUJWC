@@ -97,19 +97,23 @@ public class MainFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(final List<News> result) {
-            if (result != null) {
-                NewsAdapter adapter = new NewsAdapter(getContext(), R.layout.news_list_item, result);
-                lvNews.setAdapter(adapter);
-                lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getContext(), NewsActivity.class);
-                        intent.putExtra("newsTag", result.get(position).getNewsTag());
-                        startActivity(intent);
-                    }
-                });
+            try {
+                if (result != null) {
+                    NewsAdapter adapter = new NewsAdapter(getContext(), R.layout.news_list_item, result);
+                    lvNews.setAdapter(adapter);
+                    lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getContext(), NewsActivity.class);
+                            intent.putExtra("newsTag", result.get(position).getNewsTag());
+                            startActivity(intent);
+                        }
+                    });
+                }
+                loadView.setVisibility(View.GONE);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            loadView.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
     }

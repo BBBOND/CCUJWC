@@ -1,7 +1,6 @@
 package com.kim.ccujwc.view;
 
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,12 +8,12 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +40,8 @@ public class MainActivity extends BaseActivity
     private Toolbar toolbar;
 
     private FragmentManager fm = getSupportFragmentManager();
+
+    private Fragment targetFragment;
 
     private MainFragment mainFragment;
     private SchoolCardFragment schoolCardFragment;
@@ -140,6 +140,8 @@ public class MainActivity extends BaseActivity
             scheduleFragment = new ScheduleFragment();
         if (scoreFragment == null)
             scoreFragment = new ScoreFragment();
+
+        targetFragment = mainFragment;
     }
 
     @Override
@@ -163,28 +165,36 @@ public class MainActivity extends BaseActivity
                 transaction = fm.beginTransaction();
                 if (mainFragment == null)
                     mainFragment = new MainFragment();
+                transaction.remove(targetFragment);
                 transaction.replace(R.id.frag_main, mainFragment);
+                targetFragment = mainFragment;
                 transaction.commit();
             } else if (id == R.id.nav_schoolCard) {
                 toolbar.setTitle("学籍卡片");
                 transaction = fm.beginTransaction();
                 if (schoolCardFragment == null)
                     schoolCardFragment = new SchoolCardFragment();
+                transaction.remove(targetFragment);
                 transaction.replace(R.id.frag_main, schoolCardFragment);
+                targetFragment = schoolCardFragment;
                 transaction.commit();
             } else if (id == R.id.nav_schedule) {
                 toolbar.setTitle("个人课表");
                 transaction = fm.beginTransaction();
                 if (scheduleFragment == null)
                     scheduleFragment = new ScheduleFragment();
+                transaction.remove(targetFragment);
                 transaction.replace(R.id.frag_main, scheduleFragment);
+                targetFragment = scheduleFragment;
                 transaction.commit();
             } else if (id == R.id.nav_scoreQuery) {
                 toolbar.setTitle("成绩查询");
                 transaction = fm.beginTransaction();
                 if (scoreFragment == null)
                     scoreFragment = new ScoreFragment();
+                transaction.remove(targetFragment);
                 transaction.replace(R.id.frag_main, scoreFragment);
+                targetFragment = scoreFragment;
                 transaction.commit();
             }
         } else {

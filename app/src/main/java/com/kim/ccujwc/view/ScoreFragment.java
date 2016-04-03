@@ -119,21 +119,25 @@ public class ScoreFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(PersonGrade result) {
-            if (result != null) {
-                App.personGrade = result;
-                tvTotalCredits.setText(result.getTotalCredits());
-                tvCompulsoryCredits.setText(result.getCompulsoryCredits());
-                tvLimitCredits.setText(result.getLimitCredits());
-                tvProfessionalElectiveCredits.setText(result.getProfessionalElectiveCredits());
-                tvOptionalCredits.setText(result.getOptionalCredits());
-                tvGradePointAverage.setText(result.getGradePointAverage());
-                tvTotalStudyHours.setText(result.getTotalStudyHours());
-                tvTotalCoursesNumber.setText(result.getTotalCoursesNumber());
-                tvFailedCoursesNumber.setText(result.getFailedCoursesNumber());
+            try {
+                if (result != null) {
+                    App.personGrade = result;
+                    tvTotalCredits.setText(result.getTotalCredits());
+                    tvCompulsoryCredits.setText(result.getCompulsoryCredits());
+                    tvLimitCredits.setText(result.getLimitCredits());
+                    tvProfessionalElectiveCredits.setText(result.getProfessionalElectiveCredits());
+                    tvOptionalCredits.setText(result.getOptionalCredits());
+                    tvGradePointAverage.setText(result.getGradePointAverage());
+                    tvTotalStudyHours.setText(result.getTotalStudyHours());
+                    tvTotalCoursesNumber.setText(result.getTotalCoursesNumber());
+                    tvFailedCoursesNumber.setText(result.getFailedCoursesNumber());
 
-                ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, result.getGradeList());
-                lvScore.setAdapter(adapter);
-                loadView.setVisibility(View.GONE);
+                    ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, result.getGradeList());
+                    lvScore.setAdapter(adapter);
+                    loadView.setVisibility(View.GONE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             super.onPostExecute(result);
         }
