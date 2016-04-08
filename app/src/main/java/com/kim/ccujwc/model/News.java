@@ -51,4 +51,29 @@ public class News {
                 ", sendTime='" + sendTime + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        News news = (News) o;
+
+        if (newsTitle != null ? !newsTitle.equals(news.newsTitle) : news.newsTitle != null)
+            return false;
+        if (newsTag != null ? !newsTag.equals(news.newsTag) : news.newsTag != null) return false;
+        if (newsType != null ? !newsType.equals(news.newsType) : news.newsType != null)
+            return false;
+        return sendTime != null ? sendTime.equals(news.sendTime) : news.sendTime == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = newsTitle != null ? newsTitle.hashCode() : 0;
+        result = 31 * result + (newsTag != null ? newsTag.hashCode() : 0);
+        result = 31 * result + (newsType != null ? newsType.hashCode() : 0);
+        result = 31 * result + (sendTime != null ? sendTime.hashCode() : 0);
+        return result;
+    }
 }

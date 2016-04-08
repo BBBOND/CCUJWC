@@ -213,6 +213,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:columnCount="3">
 
             <LinearLayout
@@ -387,12 +388,55 @@
             </LinearLayout>
 
         </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d1d1d1"
+            android:clickable="true"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:paddingTop="3dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上次同步时间: " />
+
+                <TextView
+                    android:id="@+id/tv_saveTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击刷新>" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
     <com.kim.ccujwc.view.utils.LoadingView
         android:id="@+id/loadView"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/loadBackground" />
+        android:background="@color/loadBackground"
+        android:clickable="true"
+        android:visibility="invisible" />
 </RelativeLayout>

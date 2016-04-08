@@ -1,21 +1,17 @@
 package com.kim.ccujwc.view;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
 
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
-import com.kim.ccujwc.common.MyHttpUtil;
-
-import org.apache.commons.httpclient.HttpClient;
+import com.kim.ccujwc.common.Common;
+import com.kim.ccujwc.view.utils.MySharedPreferences;
 
 import java.util.Map;
 
@@ -60,18 +56,61 @@ public class WelcomeActivity extends BaseActivity {
         }
     });
 
+    Handler autoLoginHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == 1) {
+                MySharedPreferences msp = MySharedPreferences.getInstance(WelcomeActivity.this);
+                try {
+                    Map<String, Object> map = msp.readLoginInfo();
+                    String account = (String) map.get("account");
+                    if (!account.equals(App.Account)) {
+                        msp.clearAll();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                sendBroadcast(new Intent(Common.RECEIVER));
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                finish();
+                return true;
+            } else if (msg.what == 0) {
+                checkNetWorkConn();
+            }
+            return false;
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
         setScreen();
+
+        new Handler().postDelayed(new CheckLogin(), 2000);
     }
 
-    @Override
-    protected void onResume() {
-        checkNetWorkConn();
-        super.onResume();
+    class CheckLogin implements Runnable {
+        @Override
+        public void run() {
+            MySharedPreferences sharedPreferences = MySharedPreferences.getInstance(WelcomeActivity.this);
+            Map<String, Object> map = sharedPreferences.readLoginInfo();
+            Message message = autoLoginHandler.obtainMessage();
+            boolean isAutoLogin = false;
+            try {
+                isAutoLogin = (boolean) map.get("isAutoLogin");
+            } catch (Exception e) {
+                isAutoLogin = false;
+            }
+            if (isAutoLogin) {
+                message.what = 1;
+                App.Account = (String) map.get("account");
+                App.PWD = (String) map.get("password");
+            } else {
+                message.what = 0;
+            }
+            message.sendToTarget();
+        }
     }
 
     private void checkNetWorkConn() {

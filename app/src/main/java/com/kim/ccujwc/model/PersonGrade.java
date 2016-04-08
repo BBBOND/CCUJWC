@@ -113,4 +113,48 @@ public class PersonGrade {
                 ", failedCoursesNumber='" + failedCoursesNumber + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonGrade that = (PersonGrade) o;
+
+        if (gradeList != null ? !gradeList.equals(that.gradeList) : that.gradeList != null)
+            return false;
+        if (totalCredits != null ? !totalCredits.equals(that.totalCredits) : that.totalCredits != null)
+            return false;
+        if (compulsoryCredits != null ? !compulsoryCredits.equals(that.compulsoryCredits) : that.compulsoryCredits != null)
+            return false;
+        if (limitCredits != null ? !limitCredits.equals(that.limitCredits) : that.limitCredits != null)
+            return false;
+        if (professionalElectiveCredits != null ? !professionalElectiveCredits.equals(that.professionalElectiveCredits) : that.professionalElectiveCredits != null)
+            return false;
+        if (optionalCredits != null ? !optionalCredits.equals(that.optionalCredits) : that.optionalCredits != null)
+            return false;
+        if (gradePointAverage != null ? !gradePointAverage.equals(that.gradePointAverage) : that.gradePointAverage != null)
+            return false;
+        if (totalStudyHours != null ? !totalStudyHours.equals(that.totalStudyHours) : that.totalStudyHours != null)
+            return false;
+        if (totalCoursesNumber != null ? !totalCoursesNumber.equals(that.totalCoursesNumber) : that.totalCoursesNumber != null)
+            return false;
+        return failedCoursesNumber != null ? failedCoursesNumber.equals(that.failedCoursesNumber) : that.failedCoursesNumber == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = gradeList != null ? gradeList.hashCode() : 0;
+        result = 31 * result + (totalCredits != null ? totalCredits.hashCode() : 0);
+        result = 31 * result + (compulsoryCredits != null ? compulsoryCredits.hashCode() : 0);
+        result = 31 * result + (limitCredits != null ? limitCredits.hashCode() : 0);
+        result = 31 * result + (professionalElectiveCredits != null ? professionalElectiveCredits.hashCode() : 0);
+        result = 31 * result + (optionalCredits != null ? optionalCredits.hashCode() : 0);
+        result = 31 * result + (gradePointAverage != null ? gradePointAverage.hashCode() : 0);
+        result = 31 * result + (totalStudyHours != null ? totalStudyHours.hashCode() : 0);
+        result = 31 * result + (totalCoursesNumber != null ? totalCoursesNumber.hashCode() : 0);
+        result = 31 * result + (failedCoursesNumber != null ? failedCoursesNumber.hashCode() : 0);
+        return result;
+    }
 }

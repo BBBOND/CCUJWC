@@ -241,527 +241,576 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
                 <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="院系："
-                        android:textSize="18sp" />
+                        android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_department"
-                        android:layout_width="wrap_content"
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="院系："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_department"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="专业："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_major"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="班级："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_class"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="学制："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_lengthOfSchooling"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="在校日期："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_admissionDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="~"
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_graduationDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="专业方向："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_professionalDirection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="学号："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_studentID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="学习形式："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_learningForm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="学习层次："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_learningLevel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="何时地入党团："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_joinLeagueTimeAndPlace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="入学前学历："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_preSchoolEducation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="外语种类："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_foreignLanguageTypes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="入学前工作单位："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_preWorkUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="职务："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_position"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="家庭现住地址："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="下车火车站："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_stationGetOff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="邮政编码："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_postcode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="家庭电话："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_homePhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="联系人："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_contacts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="入学考号："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_entranceExam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="身份证号："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_idCardNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="学生证号："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_studentIDCardNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="毕(结)业证书号："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_graduationCertificateNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="学士证书号："
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_graduationCardNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#404040"
+                            android:textSize="18sp" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
                 </android.support.v7.widget.LinearLayoutCompat>
 
-                <android.support.v7.widget.LinearLayoutCompat
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="#d1d1d1"
+                    android:clickable="true"
+                    android:gravity="start"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="3dp">
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="专业："
-                        android:textSize="18sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="上次同步时间: " />
+
+                        <TextView
+                            android:id="@+id/tv_saveTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_refresh"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击刷新>" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_major"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="班级："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_class"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="学制："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_lengthOfSchooling"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="在校日期："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_admissionDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="~"
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_graduationDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="专业方向："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_professionalDirection"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="学号："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_studentID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="学习形式："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_learningForm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="学习层次："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_learningLevel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="何时地入党团："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_joinLeagueTimeAndPlace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="入学前学历："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_preSchoolEducation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="外语种类："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_foreignLanguageTypes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="入学前工作单位："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_preWorkUnit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="职务："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_position"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="家庭现住地址："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="下车火车站："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_stationGetOff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="邮政编码："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_postcode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="家庭电话："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_homePhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="联系人："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_contacts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="入学考号："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_entranceExam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="身份证号："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_idCardNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="学生证号："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_studentIDCardNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="毕(结)业证书号："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_graduationCertificateNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="学士证书号："
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_graduationCardNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="#404040"
-                        android:textSize="18sp" />
-                </android.support.v7.widget.LinearLayoutCompat>
             </android.support.v7.widget.LinearLayoutCompat>
         </ScrollView>
     </android.support.v7.widget.LinearLayoutCompat>
@@ -771,6 +820,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/loadBackground"
+        android:clickable="true"
         android:visibility="invisible" />
 
 </RelativeLayout>

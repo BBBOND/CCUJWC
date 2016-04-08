@@ -65,6 +65,12 @@
             android:gravity="end">
 
             <CheckBox
+                android:id="@+id/cb_autoLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自动登录" />
+
+            <CheckBox
                 android:id="@+id/cb_remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

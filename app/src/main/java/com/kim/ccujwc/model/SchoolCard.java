@@ -370,4 +370,121 @@ public class SchoolCard {
                 ", familyMemberStatus=" + familyMemberStatus +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SchoolCard that = (SchoolCard) o;
+
+        if (department != null ? !department.equals(that.department) : that.department != null)
+            return false;
+        if (major != null ? !major.equals(that.major) : that.major != null) return false;
+        if (lengthOfSchooling != null ? !lengthOfSchooling.equals(that.lengthOfSchooling) : that.lengthOfSchooling != null)
+            return false;
+        if (clas != null ? !clas.equals(that.clas) : that.clas != null) return false;
+        if (studentID != null ? !studentID.equals(that.studentID) : that.studentID != null)
+            return false;
+        if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null)
+            return false;
+        if (admissionDate != null ? !admissionDate.equals(that.admissionDate) : that.admissionDate != null)
+            return false;
+        if (graduationDate != null ? !graduationDate.equals(that.graduationDate) : that.graduationDate != null)
+            return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(that.dateOfBirth) : that.dateOfBirth != null)
+            return false;
+        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
+        if (professionalDirection != null ? !professionalDirection.equals(that.professionalDirection) : that.professionalDirection != null)
+            return false;
+        if (hometown != null ? !hometown.equals(that.hometown) : that.hometown != null)
+            return false;
+        if (joinLeagueTimeAndPlace != null ? !joinLeagueTimeAndPlace.equals(that.joinLeagueTimeAndPlace) : that.joinLeagueTimeAndPlace != null)
+            return false;
+        if (learningForm != null ? !learningForm.equals(that.learningForm) : that.learningForm != null)
+            return false;
+        if (learningLevel != null ? !learningLevel.equals(that.learningLevel) : that.learningLevel != null)
+            return false;
+        if (foreignLanguageTypes != null ? !foreignLanguageTypes.equals(that.foreignLanguageTypes) : that.foreignLanguageTypes != null)
+            return false;
+        if (preWorkUnit != null ? !preWorkUnit.equals(that.preWorkUnit) : that.preWorkUnit != null)
+            return false;
+        if (position != null ? !position.equals(that.position) : that.position != null)
+            return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (stationGetOff != null ? !stationGetOff.equals(that.stationGetOff) : that.stationGetOff != null)
+            return false;
+        if (postcode != null ? !postcode.equals(that.postcode) : that.postcode != null)
+            return false;
+        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null)
+            return false;
+        if (contacts != null ? !contacts.equals(that.contacts) : that.contacts != null)
+            return false;
+        if (entranceExam != null ? !entranceExam.equals(that.entranceExam) : that.entranceExam != null)
+            return false;
+        if (idCardNum != null ? !idCardNum.equals(that.idCardNum) : that.idCardNum != null)
+            return false;
+        if (studentIDCardNum != null ? !studentIDCardNum.equals(that.studentIDCardNum) : that.studentIDCardNum != null)
+            return false;
+        if (graduationCertificateNum != null ? !graduationCertificateNum.equals(that.graduationCertificateNum) : that.graduationCertificateNum != null)
+            return false;
+        if (graduationCardNum != null ? !graduationCardNum.equals(that.graduationCardNum) : that.graduationCardNum != null)
+            return false;
+        if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
+        if (nation != null ? !nation.equals(that.nation) : that.nation != null) return false;
+        if (marriage != null ? !marriage.equals(that.marriage) : that.marriage != null)
+            return false;
+        if (family != null ? !family.equals(that.family) : that.family != null) return false;
+        if (politicalLandscape != null ? !politicalLandscape.equals(that.politicalLandscape) : that.politicalLandscape != null)
+            return false;
+        if (preSchoolEducation != null ? !preSchoolEducation.equals(that.preSchoolEducation) : that.preSchoolEducation != null)
+            return false;
+        if (studyAndJobResume != null ? !studyAndJobResume.equals(that.studyAndJobResume) : that.studyAndJobResume != null)
+            return false;
+        if (familyMemberStatus != null ? !familyMemberStatus.equals(that.familyMemberStatus) : that.familyMemberStatus != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = department != null ? department.hashCode() : 0;
+        result = 31 * result + (major != null ? major.hashCode() : 0);
+        result = 31 * result + (lengthOfSchooling != null ? lengthOfSchooling.hashCode() : 0);
+        result = 31 * result + (clas != null ? clas.hashCode() : 0);
+        result = 31 * result + (studentID != null ? studentID.hashCode() : 0);
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
+        result = 31 * result + (admissionDate != null ? admissionDate.hashCode() : 0);
+        result = 31 * result + (graduationDate != null ? graduationDate.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (professionalDirection != null ? professionalDirection.hashCode() : 0);
+        result = 31 * result + (hometown != null ? hometown.hashCode() : 0);
+        result = 31 * result + (joinLeagueTimeAndPlace != null ? joinLeagueTimeAndPlace.hashCode() : 0);
+        result = 31 * result + (learningForm != null ? learningForm.hashCode() : 0);
+        result = 31 * result + (learningLevel != null ? learningLevel.hashCode() : 0);
+        result = 31 * result + (foreignLanguageTypes != null ? foreignLanguageTypes.hashCode() : 0);
+        result = 31 * result + (preWorkUnit != null ? preWorkUnit.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (stationGetOff != null ? stationGetOff.hashCode() : 0);
+        result = 31 * result + (postcode != null ? postcode.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
+        result = 31 * result + (entranceExam != null ? entranceExam.hashCode() : 0);
+        result = 31 * result + (idCardNum != null ? idCardNum.hashCode() : 0);
+        result = 31 * result + (studentIDCardNum != null ? studentIDCardNum.hashCode() : 0);
+        result = 31 * result + (graduationCertificateNum != null ? graduationCertificateNum.hashCode() : 0);
+        result = 31 * result + (graduationCardNum != null ? graduationCardNum.hashCode() : 0);
+        result = 31 * result + (sex != null ? sex.hashCode() : 0);
+        result = 31 * result + (nation != null ? nation.hashCode() : 0);
+        result = 31 * result + (marriage != null ? marriage.hashCode() : 0);
+        result = 31 * result + (family != null ? family.hashCode() : 0);
+        result = 31 * result + (politicalLandscape != null ? politicalLandscape.hashCode() : 0);
+        result = 31 * result + (preSchoolEducation != null ? preSchoolEducation.hashCode() : 0);
+        result = 31 * result + (studyAndJobResume != null ? studyAndJobResume.hashCode() : 0);
+        result = 31 * result + (familyMemberStatus != null ? familyMemberStatus.hashCode() : 0);
+        return result;
+    }
 }

@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,12 +19,16 @@ import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.model.PersonGrade;
 import com.kim.ccujwc.view.utils.LoadingView;
+import com.kim.ccujwc.view.utils.MySharedPreferences;
 import com.kim.ccujwc.view.utils.ScoreAdapter;
-import com.kim.ccujwc.view.utils.ShapeLoadingView;
 
 import org.apache.commons.httpclient.HttpClient;
 
+import java.util.Map;
+
 public class ScoreFragment extends BaseFragment {
+
+    private static final String TAG = "ScoreFragment";
 
     private LoadingView loadView;
     private ListView lvScore;
@@ -36,6 +41,8 @@ public class ScoreFragment extends BaseFragment {
     private TextView tvTotalStudyHours;
     private TextView tvTotalCoursesNumber;
     private TextView tvFailedCoursesNumber;
+    private TextView tvSaveTime;
+    private LinearLayout llRefresh;
 
     private int connCount = 0;
 
@@ -71,10 +78,24 @@ public class ScoreFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.content_score, null);
 
         initView(view);
-
-        new GetScore().execute();
+        initEvent();
+        MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+        if ((boolean) msp.readLoginInfo().get("isAutoLogin"))
+            new GetLocalScore().execute();
+        else
+            new GetScore().execute();
 
         return view;
+    }
+
+    private void initEvent() {
+        llRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                App.clearLocalPersonGrade();
+                new GetScore().execute();
+            }
+        });
     }
 
     private void initView(View view) {
@@ -90,18 +111,67 @@ public class ScoreFragment extends BaseFragment {
         tvTotalStudyHours = (TextView) view.findViewById(R.id.tv_totalStudyHours);
         tvTotalCoursesNumber = (TextView) view.findViewById(R.id.tv_totalCoursesNumber);
         tvFailedCoursesNumber = (TextView) view.findViewById(R.id.tv_failedCoursesNumber);
+        tvSaveTime = (TextView) view.findViewById(R.id.tv_saveTime);
+        llRefresh = (LinearLayout) view.findViewById(R.id.ll_refresh);
+    }
+
+    class GetLocalScore extends AsyncTask<Void, Void, PersonGrade> {
+
+        @Override
+        protected PersonGrade doInBackground(Void... params) {
+            try {
+                PersonGrade personGrade = null;
+                MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+                Map<String, Object> map = msp.readPersonGrade();
+                personGrade = (PersonGrade) map.get("persongrade");
+                if (personGrade.getGradeList().size() > 0) {
+                    return personGrade;
+                } else {
+                    return null;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            loadView.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(PersonGrade personGrade) {
+            try {
+                if (personGrade != null) {
+                    Log.d(TAG, "获取本地成绩!");
+                    setPersonGradeView(personGrade);
+                    MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+                    Map<String, Object> map = msp.readPersonGrade();
+                    String saveTime = (String) map.get("savetime");
+                    tvSaveTime.setText(saveTime);
+                    loadView.setVisibility(View.GONE);
+                } else {
+                    new GetScore().execute();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                new GetScore().execute();
+            }
+            super.onPostExecute(personGrade);
+        }
     }
 
     class GetScore extends AsyncTask<Void, Void, PersonGrade> {
 
         @Override
         protected PersonGrade doInBackground(Void... params) {
-            if (App.personGrade != null) {
-                return App.personGrade;
+            if (App.getLocalPersonGrade() != null) {
+                return (PersonGrade) App.getLocalPersonGrade().get("persongrade");
             }
-            HttpClient client = new HttpClient();
             try {
-                return MyHttpUtil.getGrade(client);
+                return MyHttpUtil.getGrade();
             } catch (Exception e) {
                 e.printStackTrace();
                 Message message = getScoreErrorHandler.obtainMessage();
@@ -121,19 +191,17 @@ public class ScoreFragment extends BaseFragment {
         protected void onPostExecute(PersonGrade result) {
             try {
                 if (result != null) {
-                    App.personGrade = result;
-                    tvTotalCredits.setText(result.getTotalCredits());
-                    tvCompulsoryCredits.setText(result.getCompulsoryCredits());
-                    tvLimitCredits.setText(result.getLimitCredits());
-                    tvProfessionalElectiveCredits.setText(result.getProfessionalElectiveCredits());
-                    tvOptionalCredits.setText(result.getOptionalCredits());
-                    tvGradePointAverage.setText(result.getGradePointAverage());
-                    tvTotalStudyHours.setText(result.getTotalStudyHours());
-                    tvTotalCoursesNumber.setText(result.getTotalCoursesNumber());
-                    tvFailedCoursesNumber.setText(result.getFailedCoursesNumber());
-
-                    ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, result.getGradeList());
-                    lvScore.setAdapter(adapter);
+                    MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+                    if ((boolean) msp.readLoginInfo().get("isAutoLogin"))
+                        msp.savePersonGrade(result);
+                    else
+                        App.setLocalPersonGrade(result);
+                    setPersonGradeView(result);
+                    if (App.getLocalPersonGrade() != null) {
+                        tvSaveTime.setText((String) App.getLocalPersonGrade().get("savetime"));
+                    } else {
+                        tvSaveTime.setText("刚刚");
+                    }
                     loadView.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
@@ -141,5 +209,20 @@ public class ScoreFragment extends BaseFragment {
             }
             super.onPostExecute(result);
         }
+    }
+
+    private void setPersonGradeView(PersonGrade result) {
+        tvTotalCredits.setText(result.getTotalCredits());
+        tvCompulsoryCredits.setText(result.getCompulsoryCredits());
+        tvLimitCredits.setText(result.getLimitCredits());
+        tvProfessionalElectiveCredits.setText(result.getProfessionalElectiveCredits());
+        tvOptionalCredits.setText(result.getOptionalCredits());
+        tvGradePointAverage.setText(result.getGradePointAverage());
+        tvTotalStudyHours.setText(result.getTotalStudyHours());
+        tvTotalCoursesNumber.setText(result.getTotalCoursesNumber());
+        tvFailedCoursesNumber.setText(result.getFailedCoursesNumber());
+
+        ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, result.getGradeList());
+        lvScore.setAdapter(adapter);
     }
 }

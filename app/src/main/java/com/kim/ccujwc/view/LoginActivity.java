@@ -10,21 +10,20 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
+import com.kim.ccujwc.common.Common;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.view.utils.MySharedPreferences;
-
-import org.apache.commons.httpclient.HttpClient;
 
 import java.util.Map;
 
@@ -40,6 +39,7 @@ public class LoginActivity extends BaseActivity {
     private TextInputLayout edtPassword;
     private ActionProcessButton btnLogin;
     private CheckBox cbRemember;
+    private CheckBox cbAutoLogin;
 
     private int connCount = 0;
     private int initParamsCount = 0;
@@ -125,6 +125,7 @@ public class LoginActivity extends BaseActivity {
         edtPassword = (TextInputLayout) findViewById(R.id.edtPassword);
         btnLogin = (ActionProcessButton) findViewById(R.id.btnLogin);
         cbRemember = (CheckBox) findViewById(R.id.cb_remember);
+        cbAutoLogin = (CheckBox) findViewById(R.id.cb_autoLogin);
 
         btnLogin.setEnabled(false);
         btnLogin.setText("准备中...");
@@ -132,12 +133,27 @@ public class LoginActivity extends BaseActivity {
 
         MySharedPreferences mspf = MySharedPreferences.getInstance(LoginActivity.this);
         Map<String, Object> user = mspf.readLoginInfo();
-        boolean isSave = (boolean) user.get("isSave");
-        if (isSave) {
-            cbRemember.setClickable(true);
+        boolean isSave = false;
+        try {
+            isSave = (boolean) user.get("isSave");
+        } catch (Exception e) {
+            isSave = false;
+        }
+        boolean isAutoLogin = false;
+        try {
+            isAutoLogin = (boolean) user.get("isAutoLogin");
+        } catch (Exception e) {
+            isAutoLogin = false;
+        }
+        if (isAutoLogin) {
             edtAccount.getEditText().setText((CharSequence) user.get("account"));
             edtPassword.getEditText().setText((CharSequence) user.get("password"));
-            cbRemember.setChecked(isSave);
+            cbAutoLogin.setChecked(true);
+            cbRemember.setChecked(true);
+        } else if (isSave) {
+            edtAccount.getEditText().setText((CharSequence) user.get("account"));
+            edtPassword.getEditText().setText((CharSequence) user.get("password"));
+            cbRemember.setChecked(true);
         }
     }
 
@@ -179,7 +195,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-
         if (edtAccount.getEditText() != null) {
             edtAccount.getEditText().addTextChangedListener(new TextWatcher() {
                 @Override
@@ -220,6 +235,23 @@ public class LoginActivity extends BaseActivity {
                 }
             });
         }
+
+        cbAutoLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cbRemember.setChecked(true);
+                }
+            }
+        });
+        cbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    cbAutoLogin.setChecked(false);
+                }
+            }
+        });
     }
 
     class InitParams extends AsyncTask<String, Void, Map<String, String>> {
@@ -227,8 +259,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         protected Map<String, String> doInBackground(String... params) {
             try {
-                HttpClient client = new HttpClient();
-                return MyHttpUtil.getParams(client);
+                return MyHttpUtil.getParams();
             } catch (Exception e) {
                 if (initParamsCount <= 3) {
                     initParamsCount++;
@@ -256,9 +287,8 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            HttpClient client = new HttpClient();
             try {
-                return MyHttpUtil.login(client);
+                return MyHttpUtil.login();
             } catch (Exception e) {
                 e.printStackTrace();
                 Message message = loginErrorHandler.obtainMessage();
@@ -285,11 +315,26 @@ public class LoginActivity extends BaseActivity {
         protected void onPostExecute(Boolean result) {
             if (result != null) {
                 if (result) {
-                    MySharedPreferences mspf = MySharedPreferences.getInstance(LoginActivity.this);
-                    mspf.saveLoginInfo(App.Account, App.PWD, cbRemember.isChecked());
-                    btnLogin.setProgress(0);
+                    MySharedPreferences msp = MySharedPreferences.getInstance(LoginActivity.this);
+                    try {
+                        Map<String, Object> map = msp.readLoginInfo();
+                        String account = (String) map.get("account");
+                        if (!account.equals(App.Account)) {
+                            msp.clearAll();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    msp.saveLoginInfo(App.Account, App.PWD, cbRemember.isChecked(), cbAutoLogin.isChecked());
+
+                    if (cbAutoLogin.isChecked()) {
+                        sendBroadcast(new Intent(Common.RECEIVER));
+                    }
+
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.green_complete));
                     btnLogin.setText("登录成功");
+                    btnLogin.setProgress(0);
+
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 } else {
@@ -306,5 +351,4 @@ public class LoginActivity extends BaseActivity {
             super.onPostExecute(result);
         }
     }
-
 }

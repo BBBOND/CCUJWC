@@ -5,11 +5,8 @@ import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -22,14 +19,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
-
-import org.apache.commons.httpclient.HttpClient;
+import com.kim.ccujwc.view.utils.MySharedPreferences;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +35,7 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
+    private ImageView iv;
 
     private FragmentManager fm = getSupportFragmentManager();
 
@@ -48,17 +46,7 @@ public class MainActivity extends BaseActivity
     private ScheduleFragment scheduleFragment;
     private ScoreFragment scoreFragment;
 
-    Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if (msg.what == 1) {
-                ((TextView) findViewById(R.id.tv_name)).setText(App.Name);
-                ((TextView) findViewById(R.id.tv_studentCode)).setText(App.Account);
-                return true;
-            }
-            return false;
-        }
-    });
+    private MySharedPreferences msp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +55,41 @@ public class MainActivity extends BaseActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("首页");
-
-        getStudentIfno();
+        msp = MySharedPreferences.getInstance(MainActivity.this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                ((TextView) findViewById(R.id.tv_name)).setText(App.Name);
+                ((TextView) findViewById(R.id.tv_studentCode)).setText(App.Account);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         initFragment();
+        getStudentInfo();
         new GetStudentImage().execute();
     }
 
@@ -92,8 +102,7 @@ public class MainActivity extends BaseActivity
                 return true;
             } else {
                 try {
-                    HttpClient client = new HttpClient();
-                    return MyHttpUtil.getStudentImage(client, MainActivity.this);
+                    return MyHttpUtil.getStudentImage(MainActivity.this);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return false;
@@ -103,30 +112,39 @@ public class MainActivity extends BaseActivity
 
         @Override
         protected void onPostExecute(Boolean result) {
-            ImageView iv = (ImageView) findViewById(R.id.imageView);
-            assert iv != null;
-            if (result) {
-                iv.setImageDrawable(Drawable.createFromPath(getFilesDir().getPath() + "/" + App.Account + ".jpg"));
-            } else {
-                iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_main));
-            }
-            super.onPostExecute(result);
+//            iv = (ImageView) findViewById(R.id.imageView);
+//            Log.d("--------", String.valueOf(iv == null));
+//            try {
+//                if (result) {
+//                    iv.setImageDrawable(Drawable.createFromPath(getFilesDir().getPath() + "/" + App.Account + ".jpg"));
+//
+//                } else {
+//                    iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_main));
+//                }
+//            } catch (Exception e) {
+//                iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_main));
+//            }
+//            super.onPostExecute(result);
         }
     }
 
-    private void getStudentIfno() {
+    private void getStudentInfo() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpClient client = new HttpClient();
-                try {
-                    MyHttpUtil.getName(client);
-                } catch (Exception e) {
-                    App.Name = "获取失败";
+
+                String name = msp.readUserName();
+                if (name != null && !name.equals("")) {
+                    App.Name = name;
+                } else {
+                    try {
+                        MyHttpUtil.getName();
+                        if ((boolean) msp.readLoginInfo().get("isAutoLogin"))
+                            msp.saveUserName(App.Name);
+                    } catch (Exception e) {
+                        App.Name = "获取失败";
+                    }
                 }
-                Message message = handler.obtainMessage();
-                message.what = 1;
-                message.sendToTarget();
             }
         }).start();
     }
@@ -158,44 +176,58 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (isNetWorkConn()) {
+        boolean isAutoLogin = false;
+        try {
+            isAutoLogin = ((boolean) msp.readLoginInfo().get("isAutoLogin"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            isAutoLogin = false;
+        }
+        if (isAutoLogin || isNetWorkConn()) {
             FragmentTransaction transaction = null;
             if (id == R.id.nav_main) {
                 toolbar.setTitle("首页");
-                transaction = fm.beginTransaction();
-                if (mainFragment == null)
+                if (mainFragment == null) {
                     mainFragment = new MainFragment();
-                transaction.remove(targetFragment);
-                transaction.replace(R.id.frag_main, mainFragment);
-                targetFragment = mainFragment;
-                transaction.commit();
+                }
+                if (targetFragment != mainFragment) {
+                    transaction = fm.beginTransaction();
+                    transaction.replace(R.id.frag_main, mainFragment);
+                    targetFragment = mainFragment;
+                    transaction.commit();
+                }
             } else if (id == R.id.nav_schoolCard) {
                 toolbar.setTitle("学籍卡片");
-                transaction = fm.beginTransaction();
-                if (schoolCardFragment == null)
+                if (schoolCardFragment == null) {
                     schoolCardFragment = new SchoolCardFragment();
-                transaction.remove(targetFragment);
-                transaction.replace(R.id.frag_main, schoolCardFragment);
-                targetFragment = schoolCardFragment;
-                transaction.commit();
+                }
+                if (targetFragment != schoolCardFragment) {
+                    transaction = fm.beginTransaction();
+                    transaction.replace(R.id.frag_main, schoolCardFragment);
+                    targetFragment = schoolCardFragment;
+                    transaction.commit();
+                }
             } else if (id == R.id.nav_schedule) {
                 toolbar.setTitle("个人课表");
-                transaction = fm.beginTransaction();
                 if (scheduleFragment == null)
                     scheduleFragment = new ScheduleFragment();
-                transaction.remove(targetFragment);
-                transaction.replace(R.id.frag_main, scheduleFragment);
-                targetFragment = scheduleFragment;
-                transaction.commit();
+                if (targetFragment != scheduleFragment) {
+                    transaction = fm.beginTransaction();
+                    transaction.replace(R.id.frag_main, scheduleFragment);
+                    targetFragment = scheduleFragment;
+                    transaction.commit();
+                }
             } else if (id == R.id.nav_scoreQuery) {
                 toolbar.setTitle("成绩查询");
-                transaction = fm.beginTransaction();
-                if (scoreFragment == null)
+                if (scoreFragment == null) {
                     scoreFragment = new ScoreFragment();
-                transaction.remove(targetFragment);
-                transaction.replace(R.id.frag_main, scoreFragment);
-                targetFragment = scoreFragment;
-                transaction.commit();
+                }
+                if (targetFragment != scoreFragment) {
+                    transaction = fm.beginTransaction();
+                    transaction.replace(R.id.frag_main, scoreFragment);
+                    targetFragment = scoreFragment;
+                    transaction.commit();
+                }
             }
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -215,7 +247,7 @@ public class MainActivity extends BaseActivity
         if (id == R.id.nav_reply) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("反馈");
-            builder.setMessage("有任何问题请反馈至jwy8645@163.com");
+            builder.setMessage("有任何问题请反馈至我的邮箱\n或反馈至GitHub");
             builder.setNegativeButton("复制账号", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -228,12 +260,23 @@ public class MainActivity extends BaseActivity
                     }
                 }
             });
-            builder.setPositiveButton("好的", null);
+            builder.setPositiveButton("复制网址", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        ClipboardManager c = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        c.setPrimaryClip(ClipData.newPlainText("GitHub网址", "https://github.com/BBBOND/CCUJWC/issues"));
+                        Snackbar.make(toolbar, "复制成功!", Snackbar.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Snackbar.make(toolbar, "复制失败!", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
             builder.create().show();
         } else if (id == R.id.nav_donate) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("捐赠");
-            builder.setMessage("感谢您使用本软件，你们的支持是我最大的动力，如果你有余力也可以请我吃个盒饭。\n支付宝账号:609076290@qq.com");
+            builder.setMessage("感谢您使用本软件，你们的支持是我最大的动力，如果你有余力也可以请我吃个盒饭。");
             builder.setNegativeButton("复制账号", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

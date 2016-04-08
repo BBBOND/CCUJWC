@@ -1,9 +1,7 @@
 package com.kim.ccujwc.common;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.util.Log;
 
 import com.kim.ccujwc.model.Course;
 import com.kim.ccujwc.model.Grade;
@@ -41,9 +39,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -54,7 +55,8 @@ public class MyHttpUtil {
 
     private static final String TAG = "MyHttpUtil";
 
-    public static Map<String, String> getParams(HttpClient client) throws IOException, ParserException {
+    public static Map<String, String> getParams() throws IOException, ParserException {
+        HttpClient client = new HttpClient();
         Map<String, String> map = new HashMap<>();
         client.setConnectionTimeout(10 * 1000);
         GetMethod get = new GetMethod(MyUrl.INDEX);
@@ -83,7 +85,8 @@ public class MyHttpUtil {
         }
     }
 
-    public static boolean login(HttpClient client) throws IOException, ParserException {
+    public static boolean login() throws IOException, ParserException {
+        HttpClient client = new HttpClient();
         PostMethod post = new PostMethod(MyUrl.LOGIN);
         List<Header> headers = new ArrayList<>();
         headers.add(new Header("Cookie", App.cookie));
@@ -115,7 +118,19 @@ public class MyHttpUtil {
         }
     }
 
-    public static void getName(HttpClient client) throws IOException, ParserException {
+    public static synchronized void getCookie() throws IOException, ParserException {
+        if (App.cookie2.equals("") || App.cookie.equals("")) {
+            Map<String, String> map = getParams();
+            App.cookie = map.get("Cookie");
+            App.__EVENTVALIDATION = map.get("__EVENTVALIDATION");
+            App.__VIEWSTATE = map.get("__VIEWSTATE");
+            login();
+        }
+    }
+
+    public static void getName() throws IOException, ParserException {
+        getCookie();
+        HttpClient client = new HttpClient();
         GetMethod get = new GetMethod(MyUrl.DEFAULT);
         List<Header> headers = new ArrayList<>();
         headers.add(new Header("Cookie", App.cookie + App.cookie2));
@@ -141,7 +156,9 @@ public class MyHttpUtil {
         }
     }
 
-    public static PersonGrade getGrade(HttpClient client) throws IOException, ParserException {
+    public static PersonGrade getGrade() throws IOException, ParserException {
+        getCookie();
+        HttpClient client = new HttpClient();
         PersonGrade personGrade = new PersonGrade();
         List<Grade> gradeList = new ArrayList<>();
         GetMethod get = new GetMethod(MyUrl.GRADE + App.Account);
@@ -239,7 +256,9 @@ public class MyHttpUtil {
         }
     }
 
-    public static List<Course> getCourses(HttpClient client, String date) throws IOException, ParserException {
+    public static List<Course> getCourses(String date) throws IOException, ParserException {
+        getCookie();
+        HttpClient client = new HttpClient();
         List<Course> courses = new ArrayList<>();
         GetMethod get = new GetMethod(MyUrl.COURSE + "xnxqh=" + date + "&sffd=0");
         List<Header> headers = new ArrayList<>();
@@ -320,7 +339,9 @@ public class MyHttpUtil {
         }
     }
 
-    public static SchoolCard getSchoolCard(HttpClient client) throws IOException, ParserException {
+    public static SchoolCard getSchoolCard() throws IOException, ParserException {
+        getCookie();
+        HttpClient client = new HttpClient();
         SchoolCard schoolCard;
         GetMethod get = new GetMethod(MyUrl.SCHOOLCARD + App.Account);
         List<Header> headers = new ArrayList<>();
@@ -519,9 +540,11 @@ public class MyHttpUtil {
         }
     }
 
-    public static boolean getStudentImage(HttpClient client, Context context) throws IOException {
+    public static boolean getStudentImage(Context context) throws IOException {
+        HttpClient client = new HttpClient();
         GetMethod get = new GetMethod(MyUrl.STUDENTIMAGE + App.Account + ".jpg");
         client.getHostConfiguration().getParams().setDefaults(new DefaultHttpParams());
+        client.setConnectionTimeout(7 * 1000);
         int statusCode = client.executeMethod(get);
         if (statusCode == 200) {
             InputStream is = get.getResponseBodyAsStream();
@@ -546,7 +569,9 @@ public class MyHttpUtil {
         }
     }
 
-    public static List<News> getNewsList(HttpClient client) throws IOException, ParserException {
+    public static List<News> getNewsList() throws IOException, ParserException {
+        getCookie();
+        HttpClient client = new HttpClient();
         List<News> newsList = null;
         GetMethod get = new GetMethod(MyUrl.NEWSLIST);
         List<Header> headers = new ArrayList<>();
@@ -598,7 +623,9 @@ public class MyHttpUtil {
                     newsList.add(news);
                 }
             }
-            newsList.remove(newsList.size() - 1);
+            if (newsList.size() != 0) {
+                newsList.remove(newsList.size() - 1);
+            }
             return newsList;
         } else {
             throw new IOException("网络连接异常");

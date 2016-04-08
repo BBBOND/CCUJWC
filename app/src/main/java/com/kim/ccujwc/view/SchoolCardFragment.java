@@ -1,7 +1,6 @@
 package com.kim.ccujwc.view;
 
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,20 +12,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
 import com.kim.ccujwc.model.SchoolCard;
 import com.kim.ccujwc.view.utils.LoadingView;
-import com.kim.ccujwc.view.utils.ShapeLoadingView;
+import com.kim.ccujwc.view.utils.MySharedPreferences;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,76 +38,44 @@ public class SchoolCardFragment extends BaseFragment {
 
     private static final String TAG = "SchoolCardFragment";
 
-    @Bind(R.id.iv_head)
-    ImageView ivHead;
-    @Bind(R.id.tv_fullName)
-    AppCompatTextView tvFullName;
-    @Bind(R.id.tv_sex)
-    AppCompatTextView tvSex;
-    @Bind(R.id.tv_nation)
-    AppCompatTextView tvNation;
-    @Bind(R.id.tv_dateOfBirth)
-    AppCompatTextView tvDateOfBirth;
-    @Bind(R.id.tv_hometown)
-    AppCompatTextView tvHometown;
-    @Bind(R.id.tv_family)
-    AppCompatTextView tvFamily;
-    @Bind(R.id.tv_politicalLandscape)
-    AppCompatTextView tvPoliticalLandscape;
-    @Bind(R.id.tv_phone)
-    AppCompatTextView tvPhone;
-    @Bind(R.id.tv_department)
-    AppCompatTextView tvDepartment;
-    @Bind(R.id.tv_major)
-    AppCompatTextView tvMajor;
-    @Bind(R.id.tv_class)
-    AppCompatTextView tvClass;
-    @Bind(R.id.tv_lengthOfSchooling)
-    AppCompatTextView tvLengthOfSchooling;
-    @Bind(R.id.tv_admissionDate)
-    AppCompatTextView tvAdmissionDate;
-    @Bind(R.id.tv_graduationDate)
-    AppCompatTextView tvGraduationDate;
-    @Bind(R.id.tv_professionalDirection)
-    AppCompatTextView tvProfessionalDirection;
-    @Bind(R.id.tv_studentID)
-    AppCompatTextView tvStudentID;
-    @Bind(R.id.tv_learningForm)
-    AppCompatTextView tvLearningForm;
-    @Bind(R.id.tv_learningLevel)
-    AppCompatTextView tvLearningLevel;
-    @Bind(R.id.tv_joinLeagueTimeAndPlace)
-    AppCompatTextView tvJoinLeagueTimeAndPlace;
-    @Bind(R.id.tv_preSchoolEducation)
-    AppCompatTextView tvPreSchoolEducation;
-    @Bind(R.id.tv_foreignLanguageTypes)
-    AppCompatTextView tvForeignLanguageTypes;
-    @Bind(R.id.tv_preWorkUnit)
-    AppCompatTextView tvPreWorkUnit;
-    @Bind(R.id.tv_position)
-    AppCompatTextView tvPosition;
-    @Bind(R.id.tv_address)
-    AppCompatTextView tvAddress;
-    @Bind(R.id.tv_stationGetOff)
-    AppCompatTextView tvStationGetOff;
-    @Bind(R.id.tv_postcode)
-    AppCompatTextView tvPostcode;
-    @Bind(R.id.tv_homePhone)
-    AppCompatTextView tvHomePhone;
-    @Bind(R.id.tv_contacts)
-    AppCompatTextView tvContacts;
-    @Bind(R.id.tv_entranceExam)
-    AppCompatTextView tvEntranceExam;
-    @Bind(R.id.tv_idCardNum)
-    AppCompatTextView tvIdCardNum;
-    @Bind(R.id.tv_studentIDCardNum)
-    AppCompatTextView tvStudentIDCardNum;
-    @Bind(R.id.tv_graduationCertificateNum)
-    AppCompatTextView tvGraduationCertificateNum;
-    @Bind(R.id.tv_graduationCardNum)
-    AppCompatTextView tvGraduationCardNum;
-    @Bind(R.id.loadView)
-    LoadingView loadView;
+    private ImageView ivHead;
+    private AppCompatTextView tvFullName;
+    private AppCompatTextView tvSex;
+    private AppCompatTextView tvNation;
+    private AppCompatTextView tvDateOfBirth;
+    private AppCompatTextView tvHometown;
+    private AppCompatTextView tvFamily;
+    private AppCompatTextView tvPoliticalLandscape;
+    private AppCompatTextView tvPhone;
+    private AppCompatTextView tvDepartment;
+    private AppCompatTextView tvMajor;
+    private AppCompatTextView tvClass;
+    private AppCompatTextView tvLengthOfSchooling;
+    private AppCompatTextView tvAdmissionDate;
+    private AppCompatTextView tvGraduationDate;
+    private AppCompatTextView tvProfessionalDirection;
+    private AppCompatTextView tvStudentID;
+    private AppCompatTextView tvLearningForm;
+    private AppCompatTextView tvLearningLevel;
+    private AppCompatTextView tvJoinLeagueTimeAndPlace;
+    private AppCompatTextView tvPreSchoolEducation;
+    private AppCompatTextView tvForeignLanguageTypes;
+    private AppCompatTextView tvPreWorkUnit;
+    private AppCompatTextView tvPosition;
+    private AppCompatTextView tvAddress;
+    private AppCompatTextView tvStationGetOff;
+    private AppCompatTextView tvPostcode;
+    private AppCompatTextView tvHomePhone;
+    private AppCompatTextView tvContacts;
+    private AppCompatTextView tvEntranceExam;
+    private AppCompatTextView tvIdCardNum;
+    private AppCompatTextView tvStudentIDCardNum;
+    private AppCompatTextView tvGraduationCertificateNum;
+    private AppCompatTextView tvGraduationCardNum;
+    private LoadingView loadView;
+
+    private TextView tvSaveTime;
+    private LinearLayout llRefresh;
 
     private int requestCount = 0;
 
@@ -136,23 +106,130 @@ public class SchoolCardFragment extends BaseFragment {
     });
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_school_card, null);
-        ButterKnife.bind(this, view);
-        new GetSchoolCard().execute();
+        initView(view);
+        initEvent();
+        MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+        if ((boolean) msp.readLoginInfo().get("isAutoLogin"))
+            new GetLocalSchoolCard().execute();
+        else
+            new GetSchoolCard().execute();
+
         new GetStudentImage().execute();
         return view;
+    }
+
+    private void initEvent() {
+        llRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                App.clearLocalSchoolCard();
+                new GetSchoolCard().execute();
+            }
+        });
+    }
+
+    private void initView(View view) {
+        loadView = (LoadingView) view.findViewById(R.id.loadView);
+        ivHead = (ImageView) view.findViewById(R.id.iv_head);
+        tvFullName = (AppCompatTextView) view.findViewById(R.id.tv_fullName);
+        tvSex = (AppCompatTextView) view.findViewById(R.id.tv_sex);
+        tvNation = (AppCompatTextView) view.findViewById(R.id.tv_nation);
+        tvDateOfBirth = (AppCompatTextView) view.findViewById(R.id.tv_dateOfBirth);
+        tvHometown = (AppCompatTextView) view.findViewById(R.id.tv_hometown);
+        tvFamily = (AppCompatTextView) view.findViewById(R.id.tv_family);
+        tvPoliticalLandscape = (AppCompatTextView) view.findViewById(R.id.tv_politicalLandscape);
+        tvPhone = (AppCompatTextView) view.findViewById(R.id.tv_phone);
+        tvDepartment = (AppCompatTextView) view.findViewById(R.id.tv_department);
+        tvMajor = (AppCompatTextView) view.findViewById(R.id.tv_major);
+        tvClass = (AppCompatTextView) view.findViewById(R.id.tv_class);
+        tvLengthOfSchooling = (AppCompatTextView) view.findViewById(R.id.tv_lengthOfSchooling);
+        tvAdmissionDate = (AppCompatTextView) view.findViewById(R.id.tv_admissionDate);
+        tvGraduationDate = (AppCompatTextView) view.findViewById(R.id.tv_graduationDate);
+        tvProfessionalDirection = (AppCompatTextView) view.findViewById(R.id.tv_professionalDirection);
+        tvStudentID = (AppCompatTextView) view.findViewById(R.id.tv_studentID);
+        tvLearningForm = (AppCompatTextView) view.findViewById(R.id.tv_learningForm);
+        tvLearningLevel = (AppCompatTextView) view.findViewById(R.id.tv_learningLevel);
+        tvJoinLeagueTimeAndPlace = (AppCompatTextView) view.findViewById(R.id.tv_joinLeagueTimeAndPlace);
+        tvPreSchoolEducation = (AppCompatTextView) view.findViewById(R.id.tv_preSchoolEducation);
+        tvForeignLanguageTypes = (AppCompatTextView) view.findViewById(R.id.tv_foreignLanguageTypes);
+        tvPreWorkUnit = (AppCompatTextView) view.findViewById(R.id.tv_preWorkUnit);
+        tvPosition = (AppCompatTextView) view.findViewById(R.id.tv_position);
+        tvAddress = (AppCompatTextView) view.findViewById(R.id.tv_address);
+        tvStationGetOff = (AppCompatTextView) view.findViewById(R.id.tv_stationGetOff);
+        tvPostcode = (AppCompatTextView) view.findViewById(R.id.tv_postcode);
+        tvHomePhone = (AppCompatTextView) view.findViewById(R.id.tv_homePhone);
+        tvContacts = (AppCompatTextView) view.findViewById(R.id.tv_contacts);
+        tvEntranceExam = (AppCompatTextView) view.findViewById(R.id.tv_entranceExam);
+        tvIdCardNum = (AppCompatTextView) view.findViewById(R.id.tv_idCardNum);
+        tvStudentIDCardNum = (AppCompatTextView) view.findViewById(R.id.tv_studentIDCardNum);
+        tvGraduationCertificateNum = (AppCompatTextView) view.findViewById(R.id.tv_graduationCertificateNum);
+        tvGraduationCardNum = (AppCompatTextView) view.findViewById(R.id.tv_graduationCardNum);
+        tvSaveTime = (TextView) view.findViewById(R.id.tv_saveTime);
+        llRefresh = (LinearLayout) view.findViewById(R.id.ll_refresh);
+    }
+
+    class GetLocalSchoolCard extends AsyncTask<Void, Void, SchoolCard> {
+
+        @Override
+        protected SchoolCard doInBackground(Void... params) {
+            try {
+                SchoolCard schoolCard = null;
+                MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+                Map<String, Object> map = msp.readSchoolCard();
+                schoolCard = (SchoolCard) map.get("schoolcard");
+                if (schoolCard.getFullName() != null && !schoolCard.getFullName().equals(""))
+                    return schoolCard;
+                else
+                    return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                loadView.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(SchoolCard schoolCard) {
+            try {
+                if (schoolCard != null) {
+                    Log.d(TAG, "获取本地学籍卡片!");
+                    setSchoolCardView(schoolCard);
+                    MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+                    String saveTime = (String) msp.readSchoolCard().get("savetime");
+                    tvSaveTime.setText(saveTime);
+                    loadView.setVisibility(View.GONE);
+                } else {
+                    new GetSchoolCard().execute();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                new GetSchoolCard().execute();
+            }
+            super.onPostExecute(schoolCard);
+        }
     }
 
     class GetSchoolCard extends AsyncTask<Void, Void, SchoolCard> {
 
         @Override
         protected SchoolCard doInBackground(Void... params) {
-            HttpClient client = null;
+            if (App.getLocalSchoolCard() != null) {
+                return (SchoolCard) App.getLocalSchoolCard().get("schoolcard");
+            }
+
             try {
-                client = new HttpClient();
-                return MyHttpUtil.getSchoolCard(client);
+                return MyHttpUtil.getSchoolCard();
             } catch (Exception e) {
                 Message message = GetSchoolCardErrorHandler.obtainMessage();
                 message.what = 1;
@@ -163,7 +240,11 @@ public class SchoolCardFragment extends BaseFragment {
 
         @Override
         protected void onPreExecute() {
-            loadView.setVisibility(View.VISIBLE);
+            try {
+                loadView.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             super.onPreExecute();
         }
 
@@ -171,39 +252,17 @@ public class SchoolCardFragment extends BaseFragment {
         protected void onPostExecute(SchoolCard schoolCard) {
             try {
                 if (schoolCard != null) {
-                    tvFullName.setText(schoolCard.getFullName());
-                    tvSex.setText(schoolCard.getSex());
-                    tvNation.setText(schoolCard.getNation());
-                    tvDateOfBirth.setText(schoolCard.getDateOfBirth());
-                    tvHometown.setText(schoolCard.getHometown());
-                    tvFamily.setText(schoolCard.getFamily());
-                    tvPoliticalLandscape.setText(schoolCard.getPoliticalLandscape());
-                    tvPhone.setText(schoolCard.getPhone());
-                    tvDepartment.setText(schoolCard.getDepartment());
-                    tvMajor.setText(schoolCard.getMajor());
-                    tvClass.setText(schoolCard.getClas());
-                    tvLengthOfSchooling.setText(schoolCard.getLengthOfSchooling());
-                    tvAdmissionDate.setText(schoolCard.getAdmissionDate());
-                    tvGraduationDate.setText(schoolCard.getGraduationDate());
-                    tvProfessionalDirection.setText(schoolCard.getProfessionalDirection());
-                    tvStudentID.setText(schoolCard.getStudentID());
-                    tvLearningForm.setText(schoolCard.getLearningForm());
-                    tvLearningLevel.setText(schoolCard.getLearningLevel());
-                    tvJoinLeagueTimeAndPlace.setText(schoolCard.getJoinLeagueTimeAndPlace());
-                    tvPreSchoolEducation.setText(schoolCard.getPreSchoolEducation());
-                    tvForeignLanguageTypes.setText(schoolCard.getForeignLanguageTypes());
-                    tvPreWorkUnit.setText(schoolCard.getPreWorkUnit());
-                    tvPosition.setText(schoolCard.getPosition());
-                    tvAddress.setText(schoolCard.getAddress());
-                    tvStationGetOff.setText(schoolCard.getStationGetOff());
-                    tvPostcode.setText(schoolCard.getPostcode());
-                    tvHomePhone.setText(schoolCard.getHomePhone());
-                    tvContacts.setText(schoolCard.getContacts());
-                    tvEntranceExam.setText(schoolCard.getEntranceExam());
-                    tvIdCardNum.setText(schoolCard.getIdCardNum());
-                    tvStudentIDCardNum.setText(schoolCard.getStudentIDCardNum());
-                    tvGraduationCertificateNum.setText(schoolCard.getGraduationCertificateNum());
-                    tvGraduationCardNum.setText(schoolCard.getGraduationCardNum());
+                    MySharedPreferences msp = MySharedPreferences.getInstance(getContext());
+                    if ((boolean) msp.readLoginInfo().get("isAutoLogin"))
+                        msp.saveSchoolCard(schoolCard);
+                    else
+                        App.setLocalSchoolCard(schoolCard);
+                    setSchoolCardView(schoolCard);
+                    if (App.getLocalSchoolCard() != null) {
+                        tvSaveTime.setText((String) App.getLocalSchoolCard().get("savetime"));
+                    } else {
+                        tvSaveTime.setText("刚刚");
+                    }
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("提示");
@@ -217,6 +276,42 @@ public class SchoolCardFragment extends BaseFragment {
             }
             super.onPostExecute(schoolCard);
         }
+    }
+
+    private void setSchoolCardView(SchoolCard schoolCard) {
+        tvFullName.setText(schoolCard.getFullName());
+        tvSex.setText(schoolCard.getSex());
+        tvNation.setText(schoolCard.getNation());
+        tvDateOfBirth.setText(schoolCard.getDateOfBirth());
+        tvHometown.setText(schoolCard.getHometown());
+        tvFamily.setText(schoolCard.getFamily());
+        tvPoliticalLandscape.setText(schoolCard.getPoliticalLandscape());
+        tvPhone.setText(schoolCard.getPhone());
+        tvDepartment.setText(schoolCard.getDepartment());
+        tvMajor.setText(schoolCard.getMajor());
+        tvClass.setText(schoolCard.getClas());
+        tvLengthOfSchooling.setText(schoolCard.getLengthOfSchooling());
+        tvAdmissionDate.setText(schoolCard.getAdmissionDate());
+        tvGraduationDate.setText(schoolCard.getGraduationDate());
+        tvProfessionalDirection.setText(schoolCard.getProfessionalDirection());
+        tvStudentID.setText(schoolCard.getStudentID());
+        tvLearningForm.setText(schoolCard.getLearningForm());
+        tvLearningLevel.setText(schoolCard.getLearningLevel());
+        tvJoinLeagueTimeAndPlace.setText(schoolCard.getJoinLeagueTimeAndPlace());
+        tvPreSchoolEducation.setText(schoolCard.getPreSchoolEducation());
+        tvForeignLanguageTypes.setText(schoolCard.getForeignLanguageTypes());
+        tvPreWorkUnit.setText(schoolCard.getPreWorkUnit());
+        tvPosition.setText(schoolCard.getPosition());
+        tvAddress.setText(schoolCard.getAddress());
+        tvStationGetOff.setText(schoolCard.getStationGetOff());
+        tvPostcode.setText(schoolCard.getPostcode());
+        tvHomePhone.setText(schoolCard.getHomePhone());
+        tvContacts.setText(schoolCard.getContacts());
+        tvEntranceExam.setText(schoolCard.getEntranceExam());
+        tvIdCardNum.setText(schoolCard.getIdCardNum());
+        tvStudentIDCardNum.setText(schoolCard.getStudentIDCardNum());
+        tvGraduationCertificateNum.setText(schoolCard.getGraduationCertificateNum());
+        tvGraduationCardNum.setText(schoolCard.getGraduationCardNum());
     }
 
     class GetStudentImage extends AsyncTask<Void, Void, Boolean> {
@@ -233,8 +328,7 @@ public class SchoolCardFragment extends BaseFragment {
                 return true;
             } else {
                 try {
-                    HttpClient client = new HttpClient();
-                    return MyHttpUtil.getStudentImage(client, getContext());
+                    return MyHttpUtil.getStudentImage(getContext());
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;
@@ -260,6 +354,5 @@ public class SchoolCardFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }
