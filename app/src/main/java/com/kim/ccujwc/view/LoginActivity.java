@@ -327,9 +327,7 @@ public class LoginActivity extends BaseActivity {
                     }
                     msp.saveLoginInfo(App.Account, App.PWD, cbRemember.isChecked(), cbAutoLogin.isChecked());
 
-                    if (cbAutoLogin.isChecked()) {
-                        sendBroadcast(new Intent(Common.RECEIVER));
-                    }
+                    sendBroadcast(new Intent(Common.RECEIVER));
 
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.green_complete));
                     btnLogin.setText("登录成功");

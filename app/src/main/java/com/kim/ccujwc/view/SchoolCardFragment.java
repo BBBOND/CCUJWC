@@ -23,18 +23,10 @@ import com.kim.ccujwc.model.SchoolCard;
 import com.kim.ccujwc.view.utils.LoadingView;
 import com.kim.ccujwc.view.utils.MySharedPreferences;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-
 import java.io.File;
 import java.util.Map;
-import java.util.ResourceBundle;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class SchoolCardFragment extends BaseFragment {
-
 
     private static final String TAG = "SchoolCardFragment";
 

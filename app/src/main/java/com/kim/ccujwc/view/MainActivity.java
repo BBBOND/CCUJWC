@@ -25,7 +25,9 @@ import android.widget.TextView;
 
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
+import com.kim.ccujwc.common.Common;
 import com.kim.ccujwc.common.MyHttpUtil;
+import com.kim.ccujwc.service.SyncService;
 import com.kim.ccujwc.view.utils.MySharedPreferences;
 
 import java.io.File;
@@ -310,6 +312,9 @@ public class MainActivity extends BaseActivity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     App.clearAll();
+                    MySharedPreferences msp = MySharedPreferences.getInstance(MainActivity.this);
+                    msp.changeAutoLogin("isAutoLogin", false);
+                    stopService(new Intent(MainActivity.this, SyncService.class));
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
@@ -319,5 +324,11 @@ public class MainActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        startService(new Intent(MainActivity.this, SyncService.class));
+        super.onDestroy();
     }
 }

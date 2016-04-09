@@ -59,10 +59,10 @@ public class MySharedPreferences {
         editor.apply();
     }
 
-    public void updateLoginInfo(String key, String value) {
+    public void changeAutoLogin(String key, boolean value) {
         SharedPreferences login = context.getSharedPreferences("login", Context.MODE_APPEND);
         SharedPreferences.Editor editor = login.edit();
-        editor.putString(key, value);
+        editor.putBoolean(key, value);
         editor.apply();
     }
 
