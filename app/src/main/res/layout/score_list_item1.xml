@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_isPass"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_semester"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_courseNumber"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_courseName"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_score"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_credit"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_period"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_courseNature"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_courseType"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_examNature"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_examMethod"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_mark"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
+    <TextView
+        android:id="@+id/tv_reSemester"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/scoreTextColor"
+        android:textSize="18sp" />
+</LinearLayout>

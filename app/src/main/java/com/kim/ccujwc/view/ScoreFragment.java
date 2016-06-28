@@ -1,29 +1,34 @@
 package com.kim.ccujwc.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kim.ccujwc.R;
 import com.kim.ccujwc.common.App;
 import com.kim.ccujwc.common.MyHttpUtil;
+import com.kim.ccujwc.model.Grade;
 import com.kim.ccujwc.model.PersonGrade;
 import com.kim.ccujwc.view.utils.LoadingView;
 import com.kim.ccujwc.view.utils.MySharedPreferences;
 import com.kim.ccujwc.view.utils.ScoreAdapter;
 
-import org.apache.commons.httpclient.HttpClient;
-
+import java.util.List;
 import java.util.Map;
 
 public class ScoreFragment extends BaseFragment {
@@ -222,7 +227,56 @@ public class ScoreFragment extends BaseFragment {
         tvTotalCoursesNumber.setText(result.getTotalCoursesNumber());
         tvFailedCoursesNumber.setText(result.getFailedCoursesNumber());
 
-        ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, result.getGradeList());
+        final List<Grade> grades = result.getGradeList();
+
+        ScoreAdapter adapter = new ScoreAdapter(getContext(), R.layout.score_list_item, grades);
         lvScore.setAdapter(adapter);
+
+        lvScore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Grade grade = grades.get(position);
+                String str = "";
+                str = "课程编号:" + grade.getCourseNumber() +
+                    "\n课程名称:" + grade.getCourseName() +
+                    "\n学分:" + grade.getCredit() +
+                    "\n学时:" + grade.getPeriod() +
+                    "\n课程性质:" + grade.getCourseNature() +
+                    "\n课程类别:" + grade.getCourseType() +
+                    "\n考试性质:" + grade.getExamNature() +
+                    "\n考核方式:" + grade.getExamMethod() +
+                    "\n开课学期:" + grade.getSemester() +
+                    "\n分数:" + grade.getSocre()+
+                    "\n标志:" + grade.getMark();
+                Toast.makeText(getContext(),str,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lvScore.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Grade grade = grades.get(position);
+                String str = "";
+                str = "课程编号:" + grade.getCourseNumber() +
+                        "\n课程名称:" + grade.getCourseName() +
+                        "\n学分:" + grade.getCredit() +
+                        "\n学时:" + grade.getPeriod() +
+                        "\n课程性质:" + grade.getCourseNature() +
+                        "\n课程类别:" + grade.getCourseType() +
+                        "\n考试性质:" + grade.getExamNature() +
+                        "\n考核方式:" + grade.getExamMethod() +
+                        "\n开课学期:" + grade.getSemester() +
+                        "\n分数:" + grade.getSocre()+
+                        "\n标志:" + grade.getMark();
+                try {
+                    ClipboardManager c = (ClipboardManager) getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
+                    c.setPrimaryClip(ClipData.newPlainText("成绩详情", str));
+                    Toast.makeText(getContext(),"复制成绩详情成功!",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(),"复制成绩详情失败!",Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
     }
 }
