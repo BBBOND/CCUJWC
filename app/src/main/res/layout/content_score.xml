@@ -17,8 +17,7 @@
             android:layout_weight="1"
             android:background="@color/listBackground"
             android:divider="@color/dividerColor"
-            android:dividerHeight="1dp"
-            android:padding="2dp"/>
+            android:dividerHeight="2dp"/>
 
         <GridLayout
             android:layout_width="match_parent"
